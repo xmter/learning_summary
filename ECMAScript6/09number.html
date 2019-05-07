@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let a=12;
+        let str="welcome";
+        let b=-12.5;  
+         // 判断是不是数字
+        console.log(Number.isFinite(a)); 
+        console.log(Number.isFinite(str));   
+        console.log(Number.isFinite(b));
+        // 判断是不是整数
+        console.log(Number.isInteger(a)); 
+        console.log(Number.isInteger(b));
+        // 安全整数 范围：[-(2^53-1),2^53);
+        let num=2**53-1;
+        let num1=2**53;
+        let num2=-(2**53-1);
+        console.log(Number.isSafeInteger(num));
+        console.log(Number.isSafeInteger(num1));
+        console.log(Number.isSafeInteger(num2));
+
+        console.log(Number.MAX_SAFE_INTEGER);
+        console.log(Number.MIN_SAFE_INTEGER);
+         var s=-2.9;
+         console.log(Math.abs(s));//区绝对值
+         console.log(Math.sqrt(s));//开方
+         console.log(Math.trunc(s));//截取整数部分
+
+    </script>
+</body>
+</html>

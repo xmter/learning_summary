@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #banner {
+            width: 500px;
+            height: 300px;
+            /* border: 1px solid; */
+            outline: 10px solid;
+            /* outline: 1px solid;，不占盒子空间，只是显示边框的效果 */
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        插件：外挂程序，为已有的程序增加功能
+        1.通用性
+        2.兼容性
+        盒模型：外边距、边框、内边距、
+     -->
+    <div id="banner">
+
+    </div>
+    <script src="./banner.js"> </script>
+    <script>
+        var bannerDiv=document.getElementById("banner");
+        // 幻灯片的区域 幻灯片的地址
+        createBannerArea(bannerDiv,[
+            {imgUrl:'./qingxinhuoli.jpg',link:"https://123.sogou.com/"},{imgUrl:"stadshem.jpg",link:"http://s.taobao.com/"},{imgUrl:"./xiyatu.jpg",link:"https://www.baidu.com/"},
+        ]);
+
+    </script>
+</body>
+
+</html>

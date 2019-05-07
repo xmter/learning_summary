@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // es6箭头函数，箭头函数里面的this都是指向箭头函数往外层看，直到那个非箭头函数的作用域，便是this所指
+        // 此题this便是window,this.name打印结果不是undefined，原因是window本身就具备name这个属性,啊啊啊。
+        const a={
+            name:"some name",
+            show:()=>{
+                console.log(this.name);
+            }
+        }
+       
+        a.show();
+    </script>
+</body>
+</html>

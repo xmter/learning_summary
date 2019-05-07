@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="height:5000px">
+        <div id="demo" style="position:fixed;"></div>
+    </div>
+    <script>
+         var COUNT = 0, demo = document.getElementById('demo');
+        function testFn() { demo.innerHTML += 'testFN 被调用了 ' + ++COUNT + '次<br>'; }
+        // func是用户传入需要防抖的函数
+        // wait是等待时间
+        const debounce = (func, wait) => {
+            // 缓存一个定时器id
+            let timer = null;
+            // 这里返回的函数是每次用户实际调用的防抖函数
+            // 如果已经设定过定时器了就清空上一次的定时器
+            // 开始一个新的定时器，延迟执行用户传入的方法
+            return function () {
+                if (timer) clearTimeout(timer)
+                timer = setTimeout(() => {
+                    func();
+                }, wait)
+            }
+        }
+        window.onscroll = debounce(testFn, 500);
+    </script>
+</body>
+
+</html>

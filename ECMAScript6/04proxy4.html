@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function fn(){
+            return "我是函数";
+        };
+        let newFn=new Proxy(fn,{
+            apply(){
+                return '函数么？';
+            }
+        });
+        console.log(newFn());
+    </script>
+</body>
+</html>

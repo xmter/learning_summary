@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function fun(){
+            console.log(this.a);
+        }   
+        var a=1;
+        window.fun();
+        var obj={
+            a:2,
+            fun,
+        }
+        // obj.fun.call(window);
+        // obj.fun.apply(window);
+        // obj.fun.bind(window)();
+        obj.fun();
+        // 关于优先级的问题，new>call,apply,bind>obj>window
+        var c=new fun(obj);
+        c.a=3;
+        console.log(c.a);
+
+
+        // 箭头函数
+        // 箭头函数的this只取决于他外面的第一个不是箭头函数的函数的this。
+        function arrow(){
+            return ()=>{
+                return ()=>{
+                    console.log(this);
+                }
+            }
+        }
+        // arrow.call(obj)()();
+        // arrow().call(obj)();箭头函数用call等不能改变this的指向
+        arrow()()();
+    </script>
+</body>
+</html>

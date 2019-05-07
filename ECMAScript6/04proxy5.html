@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       function sum(a,b){
+            return a+b;
+       }
+       let newSum=new Proxy(sum,{
+           apply(target,context,args){
+            //    console.log(target,context,args);
+            //    console.log(arguments);
+            //    console.log(...arguments);
+            return Reflect.apply(...arguments)**2;//**2是平方的意思
+           }
+       })
+       console.log(newSum(2,3));
+    </script>
+</body>
+</html>

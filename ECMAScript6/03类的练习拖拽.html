@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            top: 0;
+        }
+        .box1{
+            left: 0;
+        }
+        .box2{
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="box1" class="box box1">div1</div>
+    <div id="box2" class="box box2">div2</div>
+   
+    <script>
+        class Drag{
+            constructor(id){
+                this.oDiv=document.querySelector(id);
+                this.disX=0;
+                this.disY=0;
+                this.init();
+            }
+            init(){
+                this.oDiv.onmousedown=function(ev){
+                    
+                    this.disX=ev.clientX-this.oDiv.offsetLeft;
+                    this.disY=ev.clientY-this.oDiv.offsetTop;
+                  
+                    document.onmousemove=this.fnMove.bind(this);
+                    document.onmouseup=this.fnUp.bind(this);
+                    return false;
+                }.bind(this);
+            }
+            fnMove(ev){
+                this.oDiv.style.left=ev.clientX- this.disX+"px";
+                this.oDiv.style.top=ev.clientY- this.disY+"px";
+            }
+            fnUp(){
+                document.onmousemove=null;
+                document.onmouseup=null;
+            }
+        }
+        // 继承
+        class LimitDrag extends Drag{
+
+            fnMove(ev){
+                super.fnMove(ev);
+               
+                if(this.oDiv.offsetLeft<=0){
+                    this.oDiv.style.left=0;
+                }
+                if(this.oDiv.offsetTop<=0){
+                    this.oDiv.style.top=0;
+                }
+            }
+        }
+        new Drag("#box1");
+        new LimitDrag("#box2");
+    </script>
+</body>
+</html>

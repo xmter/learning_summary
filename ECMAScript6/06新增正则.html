@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // ---------------------------------------------
+        // let str="2019-03-07";
+        // //命名捕获?<名字>
+        // let reg=/(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/; 
+        // let {year,month,day}=str.match(reg).groups;
+        // console.log(year,month,day);
+        // ------------------------------------------------
+        // \k<名字>：引用  \1 次数引用
+        // let reg=/^(?<Strive>welcome)-\k<Strive>$/;
+        // let str='a-a';
+        // let str2='Strive-strive';
+        // let str3='welcome-welcome';
+
+        // console.log(reg.test(str));
+        // console.log(reg.test(str2));
+        // console.log(reg.test(str3));
+        // -------------------------------
+        // let str='2019-03-07';
+        // let reg=/(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/;
+
+        // //07/03/2019
+        // str=str.replace(reg,'$<year>/$<month>/$<day>');
+        // console.log(str);
+        // ----------------------------------
+        // let str='2019-03-07';
+        // let reg=/(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/; 
+        // str=str.replace(reg,(...args)=>{
+        //     let {year,month,day}=args[args.length-1];
+        //     return `${day}/${month}/${year}`;
+        // });
+        // console.log(str);
+        // -------------------------------------
+        // let reg=/^\w+.\w+$/;
+        // let str="welcome\nxumengting";
+        // console.log(reg.test(str));//false
+
+        // // 解决办法
+        // let reg=/^\w+.\w+$/s;
+        // let str="welcome\nxumengting";
+        // console.log(reg.test(str));//true
+        // -----------------------------------------
+        // function fn(args){
+        //     return args[0].toUpperCase();
+        // }
+        // console.log(fn`welcome`);// WELCOME
+        // -----------------------------------------------
+        // 转数组的方法
+        // https://www.cnblogs.com/NTWang/p/6280447.html
+        // var json={
+        //     name:"xumengting",
+        //     age:18,
+        //     where:"China",
+        //     length:3
+        // }
+        // console.log({...json});
+        // console.log(Array.from(json));
+    </script>
+</body>
+
+</html>

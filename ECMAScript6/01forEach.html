@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 箭头函数本身就没有this,call和apply不起作用
+        let arr=["apple","banana","orange","tomato"];
+        // arr.forEach(function(item,index,arr){
+        //     console.log(this,item,index,arr);
+        // })//window
+        // arr.forEach((item,index,arr)=>{
+        //     console.log(this,item,index,arr);
+        // })//window
+        // arr.forEach(function(item,index,arr){
+        //     console.log(this,item,index,arr);
+        // },123)//number
+         arr.forEach((item,index,arr)=>{
+            console.log(this,item,index,arr);
+        },123) //window
+    
+    </script>
+</body>
+</html>

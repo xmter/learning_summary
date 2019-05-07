@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function show(...args){
+            console.log(this);
+            console.log(args);
+        };
+        show(1,2,3,4);
+        show.call("aaa",1,2,3,4);
+        show.apply("bbb",[1,2,3,4]);
+
+        Reflect.apply(show,"ccc",[1,2,3,4]);
+
+    </script>
+</body>
+</html>

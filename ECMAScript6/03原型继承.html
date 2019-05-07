@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+         function Person(name){
+             this.name=name;
+         }
+         Person.prototype.showName=function(){
+             return `名字是：${this.name}`;
+         }
+        //  子类
+        function Student(name,skill){
+            Person.call(this,name);//继承属性
+            this.skill=skill;
+        }
+        Student.prototype=new Person();
+        //调用
+        let stu1=new Student('xumengting','逃学');
+        console.log(stu1.showName());
+    </script>
+</body>
+</html>

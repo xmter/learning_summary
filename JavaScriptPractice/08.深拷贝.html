@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //新概念
+        /* 什么是序列化
+           在我们存储数据或者网络传输数据的时候. 需要对我们的对象进行处理. 把对象处理成
+       方便存储和传输的数据格式. 这个过程叫序列化. 不同的序列化, 结果也不同. 但是目的是一
+       样的. 都是为了存储和传输.*/
+       //方法一：JSON.parse(JSON.stringify(a))此方法可以执行深拷贝，但是他还存在一些bug，就是不能序列化函数、 undefined 或者 symbol     
+        let a = {
+            age: undefined,
+            sex: Symbol('male'),
+            jobs: function () { },
+            name: 'yck'
+        }
+        let b = JSON.parse(JSON.stringify(a))
+        console.log(b) // {name: "yck"}
+        //方法二：
+        
+
+
+    </script>
+</body>
+
+</html>

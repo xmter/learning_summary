@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 法一：利用对象的属性不能相同的特点进行去重
+        var arr=[1,6,4,6,6,4,2,'a','q','a'];
+        var array=[];
+        // var obj={};
+        // for(var i=0;i<arr.length;i++){
+        //     if(!obj[arr[i]]){
+        //         obj[arr[i]]=true;
+        //         array.push(arr[i]);
+        //     }
+        // }
+        // console.log(array);
+        
+        //利用set值不能重复进行去重
+        var arrset=Array.from(new Set(arr));
+        console.log(arrset);
+
+        // 双层for循环
+        // for(var i=0;i<arr.length;i++){
+        //     for(var j=0;j<array.length;j++){
+        //         if(arr[i]==array[j]){
+        //             break;
+        //         }
+        //     }
+        //     if(j==array.length){
+        //         array.push(arr[i]);
+        //     }
+        // }
+        // console.log(array);
+        console.log(array.indexOf(1));
+        arr.forEach(function(item,index){
+            console.log(array.indexOf(item));
+            if(array.indexOf(item)==-1){
+                array.push(item);
+            }
+        })
+        console.log(array);
+    </script>
+</body>
+</html>

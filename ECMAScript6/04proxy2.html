@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //proxy的作用就是拦截的作用
+        let obj=new Proxy({},{
+            // 设置
+            set(target,prop,value){
+                if(prop=="age"){
+                    if(!Number.isInteger(value)){
+                        throw new TypeError(`年龄必须为整数`);
+                    }
+                    if(value>200){
+                        throw new RangeError(`年龄超标了，必须小于200岁`);
+                    }
+                }
+                target[prop]=value;
+            }
+        }); 
+        obj.a=123;
+        obj.name="strive";
+        console.log(obj);
+        obj.age=1200;
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- https://blog.csdn.net/u013510614/article/details/51920770 -->
+
+    <!-- 
+        小知识1：Date.now() //返回毫秒数：如1555160521382
+              +new Date() //new Date()前面加+，也返回毫秒数：如1555160536393
+
+        小知识2： throttle    节流  
+                 debounce    防抖   
+    -->
+    <div style="height:5000px">
+        <div id="demo" style="position:fixed;"></div>
+    </div>
+    <script>
+        // 节流是将多次执行变成每隔一段时间执行。
+        /**
+            * 函数节流方法
+            * @param Function fn 延时调用函数
+            * @param Number delay 延迟多长时间
+            * @param Number atleast 至少多长时间触发一次
+            * @return Function 延迟执行的方法
+         */
+        var COUNT = 0, demo = document.getElementById('demo');
+        function testFn() { demo.innerHTML += 'testFN 被调用了 ' + ++COUNT + '次<br>'; }
+
+        var throttle = function (fn, delay, atleast) {
+            var timer = null;  //闭包的体现 ，相当于是*相对的全局变量*哦。
+            var previous = null;
+
+            return function () {
+                var now = +new Date();
+
+                if (!previous) previous = now;
+                // 逻辑流程走的是“至少触发一次”的逻辑
+                if (atleast && now - previous > atleast) {
+                    fn();
+                    // 重置上一次开始时间为本次结束时间
+                    previous = now;
+                    clearTimeout(timer);
+                } else {
+                    //timeout 的延迟逻辑
+                    clearTimeout(timer);
+                    timer = setTimeout(function () {
+                        fn();
+                        previous = null;
+                    }, delay);
+                }
+            }
+        };
+        // window.onscroll = throttle(testFn, 200);
+        window.onscroll = throttle(testFn, 500, 1000);
+
+    </script>
+</body>
+
+</html>

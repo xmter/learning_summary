@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let map=new Map();
+        let json={
+            a:1,
+            b:2
+        };
+        map.set("a","aaa");
+        map.set(json,"aaa");
+        map.set("aaa",json);
+        for(let item of map){//默认是entries()
+            console.log(item);
+        }
+        for(let item of map.keys()){
+            console.log(item);
+        }
+        for(let item of map.values()){
+            console.log(item);
+        }
+        for(let item of map.entries()){
+            console.log(item);
+        }
+        for(let [k,v] of map.entries()){
+            console.log(k,v);
+        }
+        map.forEach((values,key)=>{
+            console.log(values,key);
+        });
+        // 总结
+        // Set 里面是数组，不重复，没有key。没有get方法
+        // Map 对json功能的加强 ，key可以是任意的
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // var id = 10;//用var定义一个全局变量，属于window；let，count不同
+        // var json = {
+        //     id: 1,
+        //     show: function () {
+        //         setTimeout(function () { //window调用setTimeout
+        //             console.log(this);
+        //             console.log(this.id);//10
+        //         }, 2000);
+        //     }
+        // };
+
+        let id = 10;//用var定义一个全局变量，属于window；let，count不同
+        var json = {
+            id: 1,
+            show: function () {
+                setTimeout(function () { //window调用setTimeout
+                    console.log(this);
+                    console.log(this.id);//undifined
+                }, 2000);
+            }
+        };
+
+        var id = 10;//用var定义一个全局变量，属于window；let，count不同
+        var json = {
+            id: 1,
+            show: function () {
+                setTimeout(()=>{ //箭头函数this是定义时的
+                    console.log(this);
+                    console.log(this.id);//1
+                }, 2000);
+            }
+        };
+        json.show();
+    </script>
+</body>
+
+</html>

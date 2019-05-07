@@ -1,0 +1,51 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* div{
+    width: 100px;
+    height: 100px;
+    border: 1px solid;
+    background-image: url(../demo2/xiyatu.jpg);
+    方法一 
+    background-size: 80% 80%;
+    background-position: center center; 
+    方法二 
+     background-size: 100% 100%;
+    background-origin: content-box;
+
+    background-repeat: no-repeat;
+    margin: 50px auto;
+    padding: 30px; 
+ } */ 
+#chess{
+    width: 762px;
+    height: 762px;
+    border: 1px solid;
+
+    background-image: url(./img/timg.jpg);
+    background-repeat: no-repeat;
+
+    background-size: 100% 100%;
+    background-origin: content-box;  
+
+    margin: 10px auto;
+
+    position: relative;
+}
+
+.grid{
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+
+    position: absolute;
+
+    /* background-image:url(./img/1.png);                                                                                              */
+    background-repeat: no-repeat;
+
+    background-size: 100% 100%;
+    background-origin: content-box;  
+}

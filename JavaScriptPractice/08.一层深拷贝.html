@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 展开语法和 Object.assign() 行为一致, 执行的都是浅拷贝(只遍历一层哦哦哦)
+        let obj1 = { a: 0, b: { c: 0 } };
+        let obj2 = Object.assign({}, obj1);
+        let obj3 = { ...obj1 };
+        obj1.a = 5;
+        obj1.b.c = 5;
+        console.log(obj1);
+        console.log(obj2);
+        console.log(obj3);
+        // 也就是说，浅拷贝只能解决一层的问题
+        //那有很多层对象嵌套，那么就需要理解深拷贝
+        
+    </script>
+</body>
+
+</html>

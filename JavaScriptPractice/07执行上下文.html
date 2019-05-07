@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 全局执行上下文、函数执行上下文、eval()执行上下文
+        // 特别的
+        // var tmp=123;
+        // if(true){
+        //     // let 临时死区导致了并不能在声明前使用。
+        //     // tmp='abc';
+        //     // console.log(tmp);
+        //     let tmp;
+        // }
+        // ---------------------------------------------------------------------------------
+        // 特别的：非匿名的立即执行函数
+        var foo=1;
+        (function foo(){
+            foo=10;
+            console.log(foo);
+        })();
+        // var foo=undefined=>function foo(){}=>重新赋值了foo=10=>结果却不是10
+        // because 函数里面的foo此时只是可读的
+        
+    </script>
+</body>
+</html>

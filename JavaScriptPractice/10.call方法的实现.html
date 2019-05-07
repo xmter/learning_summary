@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //实现步骤：
+        /*
+            1.将函数设为对象的属性
+            2.执行这个函数
+            3.删除这个函数
+        */
+        Function.prototype.myCall = function (context) {
+            console.log(context);//a={...}
+            var context = context || window;
+            // 给 context 添加一个属性
+            // getValue.call(a, 'yck', '24') => a.fn = getValue
+            console.log(this);// function getValue(){}
+            context.fn = this;//-------------------第一步--------------------
+            // 将 context 后面的参数取出来
+            var args = [...arguments].slice(1);
+            // getValue.call(a, 'yck', '24') => a.fn('yck', '24')
+            var result = context.fn(...args);//-----------------第二步------------------
+            // 删除 fn
+            delete context.fn;//-----------------------第三步------------------------
+            return result;
+        }
+
+        let a = {
+            value: 1
+        }
+        var value=2; //let value=2;不行，因为let的变量不会挂载到window上
+        function getValue(name, age) {
+            console.log(name);
+            console.log(age);
+            console.log(this.value);
+        }
+        getValue.myCall(a,'black','18');
+        getValue.myCall();//不传参默认是window
+    </script>
+</body>
+
+</html>

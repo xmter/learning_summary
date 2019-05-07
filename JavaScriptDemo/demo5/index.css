@@ -1,0 +1,40 @@
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+body{
+    background: url(../demo2/xiyatu.jpg) 0 0 no-repeat;
+    background-size: cover;
+    /* background-attachment: fixed;背景图片相对于可视窗口固定，所以随页面滚动背景不懂 */
+}
+.container{
+    margin: 20px;
+}
+#cavs{
+    border: 2px solid orange;
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px #888888;
+}
+ul{
+    width: 700px;
+}
+ul li{
+    display: inline-block;
+    margin-left: 35px;
+}
+ul li input{
+    background-color: yellow;
+    color: #000;
+    padding: 6px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+
+    transition-duration: 0.2s;
+}
+ul li input:hover{
+    border: 2px solid orange;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0, 0.24)
+}

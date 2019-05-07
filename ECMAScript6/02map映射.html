@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr = [
+            { title: 'aaaaa', read: 100, hot: true },
+            { title: "bbbbb", read: 20, hot: false },
+            { title: "ccccc", read: 900, hot: true },
+            { title: "ccccc", read: 10, hot: false}
+        ];
+        let newArr = arr.map((item, index, arr) => {
+            let json = {};
+            json.t = `444${item.title}444`;
+            json.r=item.read+200;
+            json.hot=item.hot==true&&'真棒！！！';
+            return json;
+        });
+        console.log(newArr);
+    </script>
+
+</body>
+
+</html>

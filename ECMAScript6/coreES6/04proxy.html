@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let obj={
+            name:"xumengting"
+        };    
+        let newObj=new Proxy(obj,{
+            get(taeget,property){
+                // TODO
+                console.log(`您访问了${property}属性`);
+
+                return taeget[property];
+            }
+        });
+        console.log(newObj.name);
+        console.log(newObj.age);
+    </script>
+</body>
+</html>

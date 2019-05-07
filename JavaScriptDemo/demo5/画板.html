@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas{
+            border: 5px orange solid;
+        }
+    </style>
+</head>
+<body>
+        <canvas id="cavs" width="700" height="700"></canvas>
+
+    <script>
+        var cavs=document.getElementById("cavs");
+        var ctx=cavs.getContext("2d");
+
+        // 图形1
+        ctx.moveTo(100, 100);//落笔点
+        ctx.lineTo(200, 100);//连接点
+        ctx.lineTo(200, 200);//连接点
+        ctx.lineTo(100, 100);//连接点
+
+        ctx.lineWidth = 20;//线条宽度
+        ctx.strokeStyle = '#ff0000';//线条颜色
+        ctx.fill();
+        ctx.closePath(); 
+
+        ctx.stroke();
+          
+        ctx.beginPath();//开启新路径
+        //图形2   
+        ctx.moveTo(300, 100);//落笔点
+        ctx.lineTo(400, 100);//连接点
+        ctx.lineTo(400, 200);//连接点
+        ctx.lineTo(300, 100);//连接点
+
+        ctx.lineWidth = 20;//线条宽度
+        ctx.strokeStyle = '#00ff00';//线条颜色
+        ctx.fill();
+        ctx.closePath(); 
+         
+        ctx.stroke();
+
+        // 复制图形--x,y,h,w
+        var imgdata=ctx.getImageData(70,70,160,160);
+        ctx.putImageData(imgdata,500,500)
+        
+        // 清除画板
+        ctx.clearRect(0, 0,700, 700);
+          
+    </script>
+</body>
+</html>

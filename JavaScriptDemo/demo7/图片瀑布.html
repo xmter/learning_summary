@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #water {
+            position: relative;
+            width: 90%;
+            margin: 10px auto;
+            border: 3px solid orange; 
+            background-color: yellow;
+            box-shadow: 0 0 30px rgb(0, 255, 21);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        技术要求：
+        1.所有的图片使用绝对定位
+        2.使用js适当布局
+        3.所有的图片等宽,高度无所谓
+   
+        图片的异步加载问题
+
+        当图片设置了src属性之后，不会同步完成图片加载
+        而是异步加载，异步是不影响
+
+        技术环境 
+        正统的系统的学习框架
+        主观能动性--自主解决问题
+        起点
+        互联网---效率效益
+        开发思维--开发模式---模仿        
+
+        奇葩说
+    -->
+    <div id="water">
+
+    </div>
+    <script src="./瀑布流.js"></script>
+
+    <script>
+        const div = document.getElementById('water');
+        // 包含图片路径数组
+        let imgs = [];
+        for (let i = 0; i <= 9; i++) {
+            imgs.push('../demo6/pic1/' + i + '.jpg');
+        }
+        createWaterFall(div, imgs, 220);
+    </script>
+</body>
+
+</html>

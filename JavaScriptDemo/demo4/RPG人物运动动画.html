@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .btnsArea {
+            display: grid;
+            grid-template-columns: 40px 40px 40px;
+            /*多少列 每列的宽度 */
+            grid-template-rows: 30px 30px 30px;
+            /*多少行 每行的高度*/
+            grid-gap: 10px;
+            /*间隔*/
+            justify-content: right;
+            margin: 50px;
+        }
+
+        .btnsArea li {
+            width: 40px;
+            height: 30px;
+        }
+
+        .btnsArea li input {
+            width: 100%;
+            height: 100%;
+            background-color: orange;
+            border-radius: 3px;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        img {
+            position: absolute;
+            left: 300px;
+            top: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--元素的自身动画和帧动画做成走的效果 -->
+    <!-- grid网格布局 -->
+    <img src="images/down-0.png" width="60px" id="rpg">
+    <ul class="btnsArea">
+        <li><input id="lu" type="button" value="左上"></li>
+        <li><input id="up" type="button" value="向上"></li>
+        <li><input id="ru" type="button" value="右上"></li>
+        <li><input id="left" type="button" value="向左"></li>
+        <li><input id="stop" type="button" value="停止"></li>
+        <li><input id="right" type="button" value="向右"></li>
+        <li><input id="ld" type="button" value="左下"></li>
+        <li><input id="down" type="button" value="向下"></li>
+        <li><input id="rd" type="button" value="右下"></li>
+    </ul>
+    <script>
+
+
+        var rpgNode = document.getElementById("rpg");
+        var i = 0;
+        var speed = 10;
+        var animate = null;
+        var stopImg = 'down';//初始化
+
+        // 4.点击上下按钮 判断方向
+        var btnsArea = document.getElementsByClassName("btnsArea")[0];
+        btnsArea.addEventListener('click', function (e) {
+            console.log(e.target.id);
+            var flag = e.target.id;
+
+            if (flag == 'stop') {
+                clearInterval(animate);
+                rpgNode.src = 'images/' + stopImg + '-' + 0 + '.png';
+                return;
+            }
+            // 格子间距条件
+            if (flag.length > 0) {
+                clearInterval(animate);
+                stopImg = flag;//保存当前的方向名称
+                animate = setInterval(function () {
+                    // 1.解决自身动画的问题----定时器改变背景图片
+                    i++;
+                    // if (i > 4) {
+                    //     i = 1;
+                    // }
+                    var img = 'images/' + flag + '-' + i + '.png';
+                    rpgNode.src = img;
+                    i = i % 4;
+                    console.log(i);
+
+                    // 2.人物移动的问题
+                    switch (flag) {
+                        case 'down': rpgNode.style.top = rpgNode.offsetTop + speed + 'px';
+                            break;
+                        case 'up': rpgNode.style.top = rpgNode.offsetTop - speed + 'px';
+                            break;
+                        case 'left': rpgNode.style.left = rpgNode.offsetLeft - speed + 'px';
+                            break;
+                        case 'right': rpgNode.style.left = rpgNode.offsetLeft + speed + 'px';
+                            break;
+                        case 'lu':
+                            rpgNode.style.left = rpgNode.offsetLeft - speed + 'px';
+                            rpgNode.style.top = rpgNode.offsetTop - speed + 'px';
+                            break;
+                        case 'ld':
+                            rpgNode.style.left = rpgNode.offsetLeft - speed + 'px';
+                            rpgNode.style.top = rpgNode.offsetTop + speed + 'px';
+                            break;
+                        case 'ru':
+                            rpgNode.style.left = rpgNode.offsetLeft + speed + 'px';
+                            rpgNode.style.top = rpgNode.offsetTop - speed + 'px';
+                            break;
+                        case 'rd':
+                            rpgNode.style.left = rpgNode.offsetLeft + speed + 'px';
+                            rpgNode.style.top = rpgNode.offsetTop + speed + 'px';
+                            break;
+                    }
+                }, 100);
+            }
+        });
+
+    </script>
+</body>
+
+</html>

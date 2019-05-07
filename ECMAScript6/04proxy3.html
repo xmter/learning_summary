@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let json={
+            a:1,
+            b:2
+        };
+        let newJson=new Proxy(json,{
+            deleteProperty(target,property){
+                console.log(`您要删除${property}属性`);
+                // TODO
+                delete target[property];//必写
+            },
+            has(target,property){
+                console.log(`判断是否存在调用的方法`);
+                // TODO
+                return property in target;
+            }
+        });
+        console.log("a" in newJson); //has()
+        delete newJson.a;//deleteProperty()
+        console.log(newJson);
+
+        console.log("a" in newJson);
+    </script>
+</body>
+</html>

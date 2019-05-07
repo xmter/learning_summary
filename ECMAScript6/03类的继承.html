@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //父类
+        class Person{
+            constructor(name){
+                this.name=name;
+            }
+            showName(){
+                console.log("父类showName");
+                // console.log(`名字为：${this.name}`);
+                return `名字为：${this.name}`; 
+            }
+        }
+        //子类
+        class Student extends Person{
+            constructor(name,skill){
+                super(name);
+                this.skill=skill;
+            }
+            showName(){
+                super.showName();//父级的方法执行
+
+                //TODO 做自己的事情
+                console.log('子类里的showName');
+            }
+            showSkill(){
+                return `我的技能是：${this.skill}`;
+            }
+        }
+
+        //调用
+        let stu1=new Student("xumengting","瞌睡");
+        console.log(stu1.showName());
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #light{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="light"></div>
+    <script>
+        
+        let oDiv=document.getElementById('light');
+        function sleep(time,color){
+            return new Promise((resolve,reject)=>{
+                setTimeout(resolve,time);
+            })
+        };
+        //async函数返回一个promise对象
+        async function changeColor(time,color){
+            oDiv.style.backgroundColor=color;
+            await sleep(time);
+        }
+        async function main(){
+          //三个灯背景循环   
+           while(true){
+            await changeColor(3000,'green');
+            await changeColor(2000,'red');
+            await changeColor(1000,'yellow');
+           }d
+        }
+        console.log(main());
+    </script>
+</body>
+</html>
