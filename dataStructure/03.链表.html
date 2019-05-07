@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // 节点类
+    // var Node=function(data){
+    //     this.data=data;
+    //     this.next=null;
+    // }
+
+    // var node1=new Node(1);
+    // var node2=new Node(2);
+    // var node3=new Node(5);
+
+    // node1.next=node2;
+    // node2.next=node3;
+
+    // console.log(node1.data);
+    // console.log(node1.next.data);
+    // console.log(node1.next.next.data);   
+    
+    // 无头链表是指第一个节点既有数据域，也有指针域，第一个节点既是首节点也是头节点
+
+    // 定义链表类
+    function LinkList(){
+        // 定义节点
+        var Node=function(data){
+            this.data=data;
+            this.next=null;
+        }
+
+        var length=0;   //长度
+        var head=null;  //头节点
+        var tail=null;  //尾节点
+
+        // 添加一个节点
+        this.append=function(data){
+            // 创建新节点
+            var node=new Node(data);
+            // 如果是空链表
+            if(head==null){
+                head=node;
+                tail=head;
+            }else{
+                tail.next=node; //尾结点指向新创建的节点
+                tail=node;  //tail指向链表最后一个节点
+            }
+            length+=1;  //长度加1
+            return true;
+        };
+
+        // 输出链表
+        this.print=function(){
+            var curr_node=head;
+            var str_link="";
+            while(curr_node){
+                str_link+=curr_node.data.toString()+"->";
+                curr_node=curr_node.next;
+            }
+            str_link+="null";
+            console.log(str_link);
+            console.log("长度为"+length.toString());
+        };
+
+        // 插入元素
+        this.insert=function(index,data){
+            if(index<0 || index>length){
+                return false;
+            }else if(index==length){
+                return this.append(data);
+            }else{
+                var new_node=new Node(data);
+                // new_node成为新的头节点
+                if(index==0){
+                    new_node.next=head;
+                    head=new_node;
+                }else{
+                    var insert_index=1;
+                    var curr_node=head; //curr_node是要插入位置的前一个节点
+                    while(insert_index<index){
+                        insert_index+=1;
+                        curr_node=curr_node.next;
+                    }
+                    //index=1,curr_node指向head，是第一个节点
+                    var next_node=curr_node.next;   //next_node是第二个节点
+                    //第一个节点指向了新的节点
+                    curr_node.next=new_node;
+                    //新的节点指向了第二个节点
+                    new_node.next=next_node;
+
+                }
+            }
+
+        };
+
+        // 删除结点
+        this.remove=function(index){
+            if(index<0 || index>=length){
+                return null;
+            }else{
+                var del_node=null;
+                if(index==0){
+                    del_node=head;
+                    head=head.next;
+                }else{
+                    
+                    var del_index=0;
+                    var per_node=null;  //被删除节点的前一个节点
+                    var curr_node=head; //curr_node就是那个要删除的节点
+
+                    while(del_index<index){
+                        del_index+=1;
+                        per_node=curr_node;
+                        curr_node=curr_node.next;
+                    }
+
+                    del_node=curr_node;
+                    per_node.next=curr_node.next;
+
+                    // 如果被删除的节点是尾节点
+                    if(curr_node.next==null){
+                        tail=per_node;
+                    }
+                }
+                length-=1;
+                del_node.next=null;
+                return del_node.data;
+            }
+            
+        };
+
+        // 获取指定索引位置的节点，需要传入参数index
+        this.get=function(index){
+            if(index<0||index>=length){
+                return null;
+            }
+            var node_index=0;
+            var curr_node=head;
+            while(node_index<index){
+                node_index+=1;
+                curr_node=curr_node.next;
+            }
+            return curr_node.data;
+        }
+
+    };
+
+    // 客户端
+    var link=new LinkList();
+
+    link.append(2);
+    link.append(3);
+    link.append(4);
+    link.append(5);
+    link.append(6);
+   
+    link.insert(0,100);
+    link.insert(3,200);
+    link.insert(5,300);
+    link.print();
+    console.log( link.remove(4));
+    console.log(link.get(4));
+    
+    </script>
+</body>
+</html>

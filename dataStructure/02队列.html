@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Queue(){
+            var items=[];
+
+            // 向队列尾部添加一个元素
+            this.enqueue=function(item){
+                items.push(item);
+            };
+
+            // 移除队列头部的元素
+            this.dequeue=function(){
+                return items.shift();
+            };
+
+            // 返回队列的头部元素
+            this.head=function(){
+                return items[0];
+            };
+
+            // 返回队列的大小
+            this.size=function(){
+                return items.length;
+            };
+
+            // 清空队列
+            this.clear=function(){
+                items=[];
+            };
+
+            // 判断是否为空队列
+            this.isEmpty=function(){
+                return items.length==0;
+            };
+
+            // 返回队列尾部的元素
+            this.tail=function(){
+                return items[items.length-1];
+            }
+        };
+
+        // 约瑟夫环（0-99 每隔两个数删除一个，求最后一个被删除的数）
+
+        function del_ring(arr_list){
+            // 把数组里的元素放入到队列中
+            var queue=new Queue();
+            for(var i=0;i<arr_list.length;i++){
+                queue.enqueue(arr_list[i]);
+            }
+
+            var index=0; 
+            while(queue.size()!=1){
+                // 弹出一个元素，判断是否需要删除
+                var item=queue.dequeue();
+                index+=1;
+                // 每隔两个就删除掉一个，那么不是被删除的元素就放回到队列尾部
+                if(index%3!==0){
+                    queue.enqueue(item);
+                }
+            }
+
+            return queue.head();
+        }
+        // 准备好的数组
+        var arr_list=[];
+        for(var i=0;i<100;i++){
+            arr_list.push(i);
+        }
+
+        console.log(del_ring(arr_list));
+
+        // 使用队列计算斐波拉切数列，求第n项值
+        function fibonacci(n){
+            var queue=new Queue();
+            var index=0;
+            // 先放入斐波拉切数列的前两个数值
+            queue.enqueue(1);
+            queue.enqueue(1);
+
+            while(index<n-2){
+                // 出队列一个元素
+                var del_item=queue.dequeue();
+                // 取队列头部元素
+                var head_item=queue.head();
+                var next_item=del_item+head_item;
+
+                // 将计算结果放入队列
+                queue.enqueue(next_item);
+                index+=1;
+            }
+
+            // 循环特点：最后队列有两项 ,要队尾
+            queue.dequeue();
+            return queue.head();
+        }
+
+        console.log(fibonacci(8));
+
+        // 用两个队列实现一个栈的push、top、pop方法
+        function QueueStack(){
+            var queue_1=new Queue();
+            var queue_2=new Queue();
+            var data_queue=null;  //放数据的队列
+            var empty_queue=null;  //空队列，备份使用
+
+            // 确定哪个队列放数据，哪个队列做备份空队列
+            var init_queue=function(){
+                // 都为空，默认返回queue_1
+                if(queue_1.isEmpty()&&queue_2.isEmpty()){
+                    data_queue=queue_1;
+                    empty_queue=queue_2;
+               }else if(queue_1.isEmpty()){
+                    data_queue=queue_2;
+                    empty_queue=queue_1;
+               }else if(queue_2.isEmpty()){
+                    data_queue=queue_1;
+                    empty_queue=queue_2;
+               }
+            };
+
+            // push方法
+            this.push=function(item){
+                init_queue();
+                return data_queue.enqueue(item);
+            }
+
+            // top方法
+            this.top=function(){
+                init_queue();
+                return data_queue.tail();
+            }
+
+            /**
+            *pop方法要弹出栈顶元素，这个栈顶元素，其实就是queue的队尾元素
+            *但是队尾的元素是不能删除的，我们可以的把data_queue里的元素(除了队尾元素)都移除放入到empty_queue中
+            *最后移除data_queue的队尾元素并返回
+            *data_queue和empty_queue交换了身份
+            */
+            this.pop=function(){
+                init_queue();
+                while(data_queue.size()>1){
+                    empty_queue.enqueue(data_queue.dequeue());
+                }
+                return data_queue.dequeue();
+            }
+        };
+
+        var q_stack=new QueueStack();
+        q_stack.push(1);
+        q_stack.push(2);
+        q_stack.push(4);
+        console.log(q_stack.top());
+        console.log(q_stack.pop());
+        console.log(q_stack.top());
+        console.log(q_stack.pop());
+        console.log(q_stack.pop());
+
+        // 使用队列打印杨辉三角的前n行，n>=1
+        // 法一
+        function print_yanghui(n){
+            var queue=new Queue();
+            queue.enqueue(1);
+            // 第一层for循环控制打印几层
+            for(var i=1;i<=n;i++){
+                var line="";
+                var pre=0;
+
+                // 第二层for循环控制打印第i层
+                for(var j=0;j<i;j++){
+                    var item=queue.dequeue();
+                    line+=item+"  ";
+                    // 计算下一行的内容
+                    var value=item+pre;
+                    pre=item;
+                    queue.enqueue(value);
+                }
+                // 每层最后一个数字是1，上面的for循环没有计算最后一个数
+                queue.enqueue(1);
+                console.log(line);
+            }
+        };
+        print_yanghui(10);
+
+        // 法二
+        function print_yanghui_2(n){
+            var queue =new Queue();
+            queue.enqueue(1);
+            queue.enqueue(0);
+            for(var i=1;i<=n;i++){
+                var line="";
+                var pre=0;
+                while(true){
+                    var item =queue.dequeue();
+                    // 用一个0把每一行的数据分割开，遇到0不输出
+                    if(item==0){
+                        queue.enqueue(1);
+                        queue.enqueue(0);
+                        break;
+                    }else{
+                        // 计算下一行的内容
+                        line+=item+"  ";
+                        var value=item+pre;
+                        pre=item;
+                        queue.enqueue(value);
+                    }
+                }
+                console.log(line);
+            }
+        }
+
+        print_yanghui_2(11);
+    </script>
+</body>
+</html>

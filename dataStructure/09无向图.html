@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 无向图类
+        var Graph = function () {
+            // 顶点
+            var vertices = [];
+            // 边
+            var adjList = {};
+            // 添加顶点
+            this.addVertex = function (v) {
+                vertices.push(v);
+                adjList[v] = [];
+            };
+            // 添加边
+            this.addEage = function (a,b) {
+                adjList[a].push(b);
+                adjList[b].push(a);
+            };
+
+            // 打印邻接表
+            this.print = function () {
+                var s = "\n";
+                for (var i = 0; i < vertices.length; i++) {
+                    var dingdian = vertices[i];
+                    
+                    s += dingdian + "=>";
+                    var bian = adjList[dingdian];
+                    for (var j = 0; j < bian.length; j++) {
+                        s += bian[j];
+                    }
+                    s += "\n";
+                }
+                console.log(s);
+            };
+        };
+        var g = new Graph();
+        g.addVertex("A");
+        g.addVertex("B");
+        g.addVertex("C");
+        g.addVertex("D");
+        g.addVertex("E");
+        g.addVertex("F");
+
+        g.addEage("A", "B");
+        g.addEage("A", "C");
+        g.addEage("A", "D");
+        g.addEage("C", "D");
+        g.addEage("B", "E");
+        g.addEage("B", "F");
+        g.print();
+    </script>
+</body>
+
+</html>

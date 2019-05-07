@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //集合特性：无重复性
+        //实现ES6的Set方法
+
+        var Set2 = function () {
+            var items = {};
+
+            //检查元素是否存在 return boolean值
+            this.has = function (value) {
+                return items.hasOwnProperty(value);
+            };
+
+            //区别于链表的添加方法 集合是不重复的
+            //add 添加元素
+            this.add = function (value) {
+                if (this.has(value)) {
+                    return false;
+                } else {
+                    //不能.变量；[变量]才有效
+                    items[value] = value;
+                    return true;
+                }
+            };
+
+            //移除元素
+            this.remove = function (value) {
+                if (this.has(value)) {
+                    delete items[value];
+                    return true;
+                }
+                return false;
+            };
+
+            //获取集合
+            this.getItems = function () {
+                return items;
+            };
+
+            //提取集合全部值并以数组返回
+            this.value= function () {
+                var values = [];
+                for (var key in items) {
+                    if (items.hasOwnProperty(key)) {
+                        values.push(key);
+                    }
+                }
+                return values;
+            };
+
+            //清空集合
+            this.clear = function () {
+                items = {};
+            }
+
+            //集合的大小
+            this.size = function () {
+                //遍历集合
+                // var count=0;
+                // for(var i in items){
+                //     if(items.hasOwnProperty(i)){
+                //         count++;
+                //     }
+                // }
+                // return count;
+                //方法二：使用Object上的静态属性keys(),返回一个数组，求其长度便可
+                return Object.keys(items).length;
+            };
+
+            //并集
+            this.union = function (otherSet) {
+                var resultSet = new Set2();
+
+                //1.把自己的值去出来
+                var arr = this.value();
+                for (var i = 0; i < arr.length; i++) {
+                    resultSet.add(arr[i]);
+                }
+
+                //2.把另一只集合的值提取出来
+                arr = otherSet.value();
+                for (var i = 0; i < arr.length; i++) {
+                    resultSet.add(arr[i]);
+                }
+
+                return resultSet;
+            };
+
+            //交集
+            this.intersection = function (otherSet) {
+                var resultSet = new Set2();
+
+                var arr = this.value();
+                for (var i = 0; i < arr.length; i++) {
+                    if (otherSet.has(arr[i])) {
+                        resultSet.add(arr[i]);
+                    }
+                }
+
+                return resultSet;
+            };
+
+            //差集
+            this.difference = function (otherSet) {
+                var resultSet = new Set2();
+
+                var arr = this.value();
+                for (var i = 0; i < arr.length; i++) {
+                    if (!otherSet.has(arr[i])) {
+                        resultSet.add(arr[i]);
+                    }
+                }
+
+                return resultSet;
+            };
+        };
+
+        var set2=new Set2();
+        set2.add(1);
+        set2.add(2);
+        set2.add(3);
+        set2.add(1);
+        console.log(set2.getItems());
+        console.log(set2.has(3));
+        console.log(set2.remove(2));
+        console.log(set2.size());
+        console.log(set2.value());
+        var set3=new Set2();
+        set3.add(1);
+        set3.add(3);
+        set3.add(4);
+        console.log(set2.union(set3).value());
+        console.log(set2.intersection(set3).value());
+        console.log(set2.difference(set3).value());
+    </script>
+</body>
+
+</html>

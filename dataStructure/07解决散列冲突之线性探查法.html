@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 类
+        var HashTable_L = function () {
+            var table = [];
+            // 定位
+            var loseloseHashCode = function (key) {
+                var hash = 0;
+                for (var i = 0; i < key.length; i++) {
+                    hash = key[i].charCodeAt();
+                }
+                return hash % 37;
+            };
+            // 辅助类
+            var Node = function (key, value) {
+                this.key = key;
+                this.value = value;
+            };
+            //存放
+            this.put = function (key, value) {
+                var position = loseloseHashCode(key);
+                if (table[position] == undefined) {
+                    table[position] = new Node(key, value);
+                } else {
+                    // 这个位置被占了
+                    var index = position + 1;
+                    while (table[index] !== undefined) {
+                        index++;
+                    }
+                    table[index] = new Node(key, value);
+                }
+            };
+            // 获取值(自己写的)
+            this.get=function(key){
+                var position = loseloseHashCode(key);
+                if (table[position]!== undefined) {
+                    for (var i = position; i < table.length; i++) {
+                        if (table[position].key == key) {
+                            return table[position].value;
+                        }
+                    }
+                }else{
+                    return undefined;
+                }
+            };
+            // 删除(自己写的)
+            this.remove = function (key) {
+                var position = loseloseHashCode(key);
+                if (table[position]!== undefined) {
+                    for (var i = position; i < table.length; i++) {
+                        if (table[position].key == key) {
+                            table[position] = undefined;
+                            table.length--;
+                            return true;
+                        }
+                    }
+                }else{
+                    return false;
+                }
+            };
+            //获取私有变量
+            this.getTable = function () {
+                return table;
+            };
+        };
+        var htx = new HashTable_L();
+        htx.put("ad", "11111");
+        htx.put("bc", "22222");
+        console.log(htx.get("bc"));
+        console.log(htx.getTable());
+        console.log(htx.remove("bc"));
+        console.log(htx.getTable());
+        console.log(htx.get("bc"));
+    </script>
+</body>
+
+</html>

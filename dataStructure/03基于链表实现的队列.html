@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Queue(){
+            var linklist=new LinkList();
+
+            // 入队列
+            this.enqueue=function(item){
+                linklist.append(item);
+            }
+
+            // 出队列
+            this.dequeue=function(){
+                return linklist.remove_head();
+            }
+
+            // 返回队首
+            this.head=function(){
+                return linklist.head(); 
+            }
+
+            // 返回队尾
+            this.tail=function(){
+                return linklist.tail();
+            }
+  
+            // size
+            this.size=function(){
+                return linklist.length();
+            }
+
+            // clear
+            this.clear=function(){
+                linklist.clear();
+            }
+
+            // isEmpty
+            this.isEmpty=function(){
+                return linklist.isEmpty();
+            }
+
+        }
+    </script>
+</body>
+</html>

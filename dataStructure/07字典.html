@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //字典类
+        var Dictionary = function () {
+            var items = {};
+
+            //检查键是否存在
+            this.has = function (key) {
+                return items.hasOwnProperty(key);
+                //方法二：用js中的关键字
+                // return key in items;
+            };
+            //设置添加值
+            this.set = function (key, value) {
+                items[key] = value;
+            };
+            //删除值
+            this.delete = function (key) {
+                if (this.has(key)) {
+                    delete items[key];
+                    return true;
+                }
+                return false;
+            };
+            //获取值
+            this.get = function (key) {
+                if (this.has(key)) {
+                    return items[key];
+                }
+                return undefined;
+            };
+            //获取私有变量items
+            this.getItems = function () {
+                return items;
+            };
+            //以列表返回字典值
+            this.values = function () {
+                var values = [];
+                for (var k in items) {
+                    if (this.has(k)) {
+                        values.push(items[k]);
+                    }
+                }
+                return values;
+            };
+            //获取全部键名
+            this.keys = function () {
+                return Object.keys(items);
+            };
+        };
+
+        var d = new Dictionary();
+        d.set("xiaoming", "20岁");
+        d.set("xiaohua", "15岁");
+        console.log(d.getItems());
+        console.log(d.values());
+        console.log(d.keys());
+        console.log(d.has("xiaoming"));
+        console.log(d.get("xiaoming"));
+        console.log(d.delete("xiaohua"));
+    </script>
+</body>
+
+</html>

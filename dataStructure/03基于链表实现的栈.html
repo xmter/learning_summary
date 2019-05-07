@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //栈类
+        function Stack(){
+            var linklist=new LinkList();
+
+            // 从栈顶添加元素
+            this.push=function(item){
+                linklist.append(item);
+            }
+
+            // 弹出栈顶元素
+            this.pop=function(){
+                return linklist.remove_tail();
+            }
+
+            // 返回栈顶元素
+            this.top=function(){
+                return linklist.tail();
+            }
+
+            // 返回栈的大小
+            this.size=function(){
+                return linklist.length();
+            }
+
+            // 判断是否为空
+            this.isEmpty=function(){
+                return linklist.isEmpty();
+            }
+
+            // 清空栈
+            this.clear=function(){
+                linklist.clear();
+            }
+        }
+    </script>
+</body>
+</html>

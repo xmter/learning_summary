@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //哈希表类
+        var HashTable=function(){
+            var items=[];
+            //散列函数
+            // key>转为nummber>定位items[number];
+            //ascii a=>97
+            //J74 o111 b98 s115 
+            // 定位
+            var loseloseHashCode=function(key){
+                var hash=0;
+                for(var i=0;i<key.length;i++){
+                    hash=key[i].charCodeAt();
+                }
+                return hash%37;
+            };
+            // 存放
+            this.put=function(key,value){
+                var position=loseloseHashCode(key);
+                console.log(position+"-"+value);
+                items[position]=value;
+            };
+            // 删除
+            this.remove=function(key){
+                items[loseloseHashCode(key)]=undefined;
+            }
+            // 获取私有变量
+            this.getItems=function(){
+                return items;
+            };
+        };
+        var ht=new HashTable();
+        ht.put("xu","12345");
+        ht.put("zhao","67890");
+        console.log(ht.getItems());
+        ht.remove("zhao");
+        console.log(ht.getItems());
+    </script>
+</body>
+</html>

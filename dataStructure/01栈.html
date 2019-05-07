@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+function Stack(){
+    var items=[];
+    //从栈顶放元素，也叫压栈 
+    this.push=function(item){
+        items.push(item);
+    };
+
+    // 弹出（取出）栈顶元素
+    this.pop=function(){
+        return items.pop();
+    };
+
+    // 返回栈顶元素
+    this.top=function(){
+        return items[items.length-1];
+    };
+
+    //判断栈是否为空
+    this.isEmpty=function(){
+        return items.length==0;
+    };
+
+    // 返回栈的大小
+    this.size=function(){
+        return items.length;
+    };
+
+    // 清空栈
+    this.clear=function(){
+        items=[];
+    }
+
+    // 简单理解为 私有属性（var items比this.items安全） 公有方法（通过方法访问属性，保护属性）
+};
+
+
+// 判断字符串的括号是否合法
+function is_legal_brackets(str){
+   var starck=new Stack();
+   for(var i=0;i<str.length;i++){
+       var item=str[i];
+    //    遇到左括号，入栈
+       if(str[i]==="("){
+           starck.push();
+        //    遇到右括号，判断栈是否为空
+       }else if(str[i]===")"){
+           if(starck.isEmpty()){
+               return false;
+           }else{
+               starck.pop();// 不空，弹出栈顶左括号
+           }
+       }
+   }
+  // 最后 如果栈空，合法；栈不空，不合法   
+   return starck.isEmpty();  //函数返回值 ture：合法；false：不合法；
+};
+
+console.log(is_legal_brackets("ssf(ds(dd(da)ss)xxxx)dccc"));
+console.log(is_legal_brackets("ssf)(ds(dd(da)ss)xxxx)dccc"));
+
+// 计算后缀表达式
+function calc_exp(exp){
+    var stack=new Stack();
+    for(var i=0;i<exp.length;i++){
+        var item=exp[i];
+        /*
+            1、a.indexOf(b)方法，只有字符串和数组有，用来判断a
+        中是否包含b，返回下标，不存在返回-1；
+            2、对于字符串和数组区别是：a为字符串，b为数字，a中有字符串b无数字b,隐式转换为字符串b
+        a为数组,b为数字.a中有字符串b无数字b,返回-1.
+        */
+        // 数字入栈，运算符连续出栈两次并做计算
+        if(["+","-","*","/"].indexOf(item)>=0){
+            var value_1=stack.pop();
+            var value_2=stack.pop();
+            var exp_str=value_2+item+value_1;
+            var res=parseInt(eval(exp_str));//eval()方法将字符串转换为可执行代码
+            stack.push(res.toString());//栈中存字符串
+        }else{
+            stack.push(item);
+        }
+    }
+    // 弹出栈中的计算结果
+    return stack.pop();
+};
+console.log(calc_exp(["4","13","5","/","+"]));
+
+// 实现一个有min方法的栈
+function MinStack(){
+    
+    var data_stack=new Stack();
+    var min_stack=new Stack();
+    
+    // push的时候,两个栈都要操作
+    this.push=function(item){
+      data_stack.push(item); //data_stack是常规栈,常规操作即可
+
+    //  如果min_stack为空，直接放入；如果item小于min_stack栈顶元素，放入其中
+    //  这样做的目的，是保证min_stack的栈顶始终保存栈的最小值
+      if(min_stack.isEmpty()||item<min_stack.top()){
+          min_stack.push(item);
+      } else{
+        // 如果item大于等于栈顶元素，把min_stack的栈顶元素再放入一次
+        // min_stack的元素个数要和data_stack保持一致
+          min_stack.push(min_stack.top());
+      }
+    };
+
+    // pop的时候，两个栈都要pop
+    this.pop=function(){
+        data_stack.pop();
+        min_stack.pop();
+    };
+    
+    // 直接取栈顶的元素
+    this.min=function(){
+        return min_stack.top();
+    };
+};
+      var minstack1=new MinStack();
+      minstack1.push(3);
+      minstack1.push(6);
+      minstack1.push(8);
+      console.log(minstack1.min());
+      minstack1.push(2);
+      console.log(minstack1.min());
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 结点定义
+        var BinTreeNode=function(data){
+            this.data=data;
+            this.leftChild=null;
+            this.rightChild=null;
+            this.parentNode=null;
+        };
+        
+        // 栈的定义
+        function Stack(){
+            var items=[];
+            //从栈顶放元素，也叫压栈 
+            this.push=function(item){
+                items.push(item);
+            };
+
+            // 弹出（取出）栈顶元素
+            this.pop=function(){
+                return items.pop();
+            };
+
+            // 返回栈顶元素
+            this.top=function(){
+                return items[items.length-1];
+            };
+
+            //判断栈是否为空
+            this.isEmpty=function(){
+                return items.length==0;
+            };
+
+            // 返回栈的大小
+            this.size=function(){
+                return items.length;
+            };
+
+            // 清空栈
+            this.clear=function(){
+                items=[];
+            }
+        };
+
+        // 二叉树类的定义
+        function BinaryTree(){
+            var root=null;
+
+            this.init_tree=function(string){
+                var stack=new Stack();
+                var k=0;  //标识是左子树还是右子树
+                var new_node=null;
+
+                for(var i=0;i<string.length;i++){
+                    var item=string[i];
+                    if(item=="#"){
+                        // 啊 可怕 item=="#",写成item=-"#"造成代码无法运行 可怕。
+                        break;
+                    }
+                    if(item=="("){
+                        stack.push(new_node);
+                        k=1;
+                    }else if(item==","){
+                        k=2;
+                    }else if(item==")"){
+                        stack.pop();
+                    }else{
+                        new_node =new BinTreeNode(item);
+                        if(root==null){
+                            root = new_node;
+                        }else if(k==1){
+                            // 左子树
+                            var top_item = stack.top();
+                            top_item.leftChild = new_node;
+                            new_node.parentNode = top_item;
+                        }else{
+                            // 右子树
+                            var top_item = stack.top();
+                            top_item.rightChild = new_node;
+                            new_node.parentNode = top_item;
+                        }
+                    }
+                }
+            }
+
+            // 返回根结点
+            this.get_root=function(){
+                return root;
+            }
+
+            // 中序遍历 （左子树、当前结点、右子树）
+            this.in_order=function(node){
+                if(node==null){
+                    return;
+                }
+
+                // 递归
+                this.in_order(node.leftChild);
+                console.log(node.data+"中序");
+                this.in_order(node.rightChild);
+            }
+
+            // 前序遍历
+            // this.pre_order=function(node){
+            //     if(node==null){
+            //         return;
+            //     }
+
+            //     // 递归
+            //     console.log(node.data);
+            //     this.in_order(node.leftChild);
+            //     this.in_order(node.rightChild);
+            // }
+
+            // // 后序遍历
+            // this.post_order=function(node){
+            //     if(node==null){
+            //         return;
+            //     }
+
+            //     // 递归
+            //     this.in_order(node.leftChild);
+            //     this.in_order(node.rightChild);
+            //     console.log(node.data);
+            // }
+                
+                this.pre_order=function(node){
+                    if(node==null){
+                       return;
+                    }
+                    var stack=new Stack();
+                    var curr_node=node;
+
+                    while(curr_node){
+                        console.log(curr_node.data+"前序");
+                        if(curr_node.rightChild){
+                            stack.push(curr_node.rightChild);
+                        }
+
+                        if(curr_node.leftChild){
+                            curr_node=curr_node.leftChild;
+                        }else{
+                            curr_node=stack.pop();
+                        }
+                    }
+                }
+
+
+            // size返回节点数量
+            var tree_node_count=function(node){
+                //思想：左子树节点数量加上右子树的节点数量 再加上1
+                if(!node){
+                    return 0;
+                } 
+
+                var left_node_count=tree_node_count(node.leftChild);
+                var right_node_count=tree_node_count(node.rightChild);
+                return left_node_count+right_node_count+1;
+            };
+            // 返回节点数量
+            this.size=function(){
+                return tree_node_count(root);
+            }
+
+            //height返回树的高度
+            var tree_height=function(node){
+                // 思想：左子树的高度和右子树的高度取最大值，加上当前的高度
+                if(!node){
+                    return 0;
+                }
+
+                var left_child_height=tree_height(node.leftChild);
+                var right_child_height=tree_height(node.rightChild);
+                if(left_child_height>right_child_height){
+                    return left_child_height+1;
+                }else{
+                    return right_child_height+1;
+                }
+            }
+            //返回高度
+            this.height=function(){
+                return tree_height(root);
+            }
+
+            // 查找节点
+            var find_node=function(node,data){
+                if(!node){
+                    return null;
+                }
+                if(node.data==data){
+                    return node;
+                }
+
+                left_res=find_node(node.leftChild,data);
+                if(left_res){
+                    return left_res;
+                }
+
+                return find_node(node.rightChild,data);                                
+            }
+            // 查找data
+            this.data=function(data){
+                return find_node(root,data);
+            }
+        };
+
+
+        // 客户端
+        var bt=new BinaryTree();
+        bt.init_tree('A(B(D,E(G,)),C(,F))#');
+        var root_node=bt.get_root();
+        bt.in_order(root_node);
+
+        bt.pre_order(root_node);
+
+        console.log(bt.size());
+        console.log(bt.height());
+        console.log(bt.data("D"));
+
+        // 求一棵树的镜面
+        // 法一
+        var mirror_1=function(node){
+            if(!node){
+                return;
+            }
+
+            // 用temp保存左孩子
+            var temp=node.leftChild;
+            // 左孩子等于右孩子
+            node.leftChild=node.rightChild;
+            // 右孩子等于左孩子
+            node.rightChild=temp;
+            // 继续翻转
+            mirror_1(node.leftChild);
+            mirror_1(node.rightChild);
+        }
+
+        // 法二
+        var mirror_2=function(node){
+            if(!node){
+                return null;
+            }
+            // 翻转左子树
+            var left=mirror_2(node.leftChild);
+            // 翻转右子树
+            var right=mirror_2(node.rightChild);
+
+            // 左右孩子互换
+            node.rightChild=left;
+            node.leftChild=right;
+
+            // 返回当前结点
+            return node;
+        }
+        
+        // 客户端
+        mirror_2(root_node);
+        bt.in_order(root_node);
+
+        // 前序遍历的非递归思想
+        function pre_order(node){
+            var stack=new Stack();
+            var curr_node=node;
+
+            while(curr_node){
+                console.log(curr_node.data+"非递归前序遍历");
+                if(curr_node.rightChild){
+                    stack.push(curr_node.rightChild);
+                }
+
+                if(curr_node.leftChild){
+                    curr_node=curr_node.leftChild;
+                }else{
+                    curr_node=stack.pop();
+                }
+            }
+
+
+        }
+       pre_order(root_node);
+    </script>
+</body>
+</html>

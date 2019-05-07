@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //栈类
+        function Stack() {
+            var items = [];
+            //从栈顶放元素，也叫压栈 
+            this.push = function (item) {
+                items.push(item);
+            };
+
+            // 弹出（取出）栈顶元素
+            this.pop = function () {
+                return items.pop();
+            };
+
+            // 返回栈顶元素
+            this.top = function () {
+                return items[items.length - 1];
+            };
+
+            //判断栈是否为空
+            this.isEmpty = function () {
+                return items.length == 0;
+            };
+
+            // 返回栈的大小
+            this.size = function () {
+                return items.length;
+            };
+
+            // 清空栈
+            this.clear = function () {
+                items = [];
+            }
+
+            // 简单理解为 私有属性（var items比this.items安全） 公有方法（通过方法访问属性，保护属性）
+        };
+
+        //十进制转二进制：余数法
+        function conversion(number){
+            // number是十进制数
+            var stack=new Stack();
+            var yushu;
+
+            var string2="";
+
+            while(number>0){
+                yushu=number%2; 
+                stack.push(yushu);
+                number=Math.floor(number/2);
+            }
+
+            while(!stack.isEmpty()){
+                string2+=stack.pop();
+            }
+
+            return string2;
+        };
+
+        console.log(conversion(10));
+
+        //栈的作用：在编程语言的编译器和内存中保存变量，方法调用。
+
+        // 函数调用是入栈 ，函数执行是出栈
+        var fun1=function(){
+            return console.log("fun1 finish");
+        };
+        var fun2=function(){
+            fun1();
+            return console.log("fun2 finish");
+        }
+        fun2();
+
+
+        // 递归:不停入栈，可能导致内存溢出
+        var app=function(){
+            app();
+        }
+        
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 类
+        var Tree=function(){
+            // 辅助类
+            var Node=function(value){
+                this.value=value;
+                this.left=null;
+                this.right=null;
+            }
+
+            var root=null; //初始化root；设置为私有私有变量
+            // 插入节点
+            var insertNode=function(node,newNode){
+                if(newNode.value>node.value){
+                    // 往右走
+                    if(node.right==null){
+                        node.right=newNode;
+                    }else{
+                        insertNode(node.right,newNode);
+                    }                  
+                }else if(newNode.value<node.value){
+                    // 往左走
+                    if(node.left==null){
+                        node.left=newNode;
+                    }else{
+                        insertNode(node.left,newNode);
+                    }
+                }
+            };
+            this.insert=function(value){
+                var newNode=new Node(value);
+                if(root==null){
+                    // 空树
+                    root=newNode;
+                }else{
+                    insertNode(root,newNode);
+                }
+            };
+            // 查找
+            this.search=function(value){
+
+            };
+            //移除节点：思想是重新构建树
+            var findMinNode=function(node){
+                if(node==null) return null;
+                while(node&&node.left){
+                    node=noed.left;
+                }
+                return node;
+            };
+            var removeNode=function(node,value){
+                if(node==null) return null;
+                if(value>node.value){
+                    // 继续向右查找
+                    node.right=removeNode(node.right,value);
+                    return node;
+                }else if(value<node.value){
+                    // 继续向左查找
+                    node.left=removeNode(node.left,value);
+                    return node;
+                }else{
+                    // value==node.value
+                    // 执行删除操作
+                    if(node.left==null&&node.right==null){
+                        // 叶节点条件
+                        node=null;
+                        return node;
+                    }
+                    // 只有一个子节点的条件
+                    if(node.left==null&&node.right){
+                        return node.right;
+                    }else if(node.right==null&&node.left){
+                        return node.left;
+                    }
+                    // 有两个子节点的条件
+                    var aux=findMinNode(node.right);//aux 找到的是右子树的子节点
+                    node.value=aux.value;
+                    node.right=removeNode(node.right,aux.value);
+                    return node;
+                }
+            };
+            this.remove=function(value){
+                root=removeNode(root,value);
+            };
+            // 遍历数
+            var traverse=function(node,callback){
+                if(node==null) return;
+                // callback(node.value); //前序
+                traverse(node.left,callback);
+                // callback(node.value); //中序
+                traverse(node.right,callback);
+                callback(node.value); //后序
+            }
+            this.traverse=function(callback){
+                traverse(root,callback);
+            };
+            // 获取树的最小值
+            // 1 树空 2树不空
+            var min=function(node){
+                if(node==null) return null;
+                while(node&&node.left){
+                    node=node.left;
+                }
+                return node.value;
+            };
+            this.min=function(){
+                return min(root);
+            };
+            // 获取树的最大值
+            var max=function(node){
+                if(node==null) return null;
+                while(node&&node.right){
+                    node=node.right;
+                }
+                return node.value;
+            };
+            this.max=function(){
+                return max(root);
+            };
+            // 获取私有变量
+            this.getRoot=function(){
+                return root;
+            }
+        };
+        // 回调函数
+        var print=function(value){
+            console.log("value-",value)
+        };
+
+        var t=new Tree();
+        t.insert(11);
+        t.insert(8);
+        t.insert(4);
+        t.insert(9);
+        t.insert(10);
+        t.insert(3);
+        t.insert(5);
+        t.insert(16);
+        t.insert(13);
+        t.insert(17);
+        t.traverse(print);
+        console.log(t.min()+"小");
+        console.log(t.max()+"大");
+        console.log(t.getRoot());
+        // t.remove(5);
+        // t.remove(8);
+        t.remove(9);
+        console.log(t.getRoot());
+    </script>
+</body>
+</html>

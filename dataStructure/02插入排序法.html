@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+          //通用函数
+        function checkArray(array) {
+            if (!array || array.length <= 2) {
+                return;
+            }
+        }
+        function swap(array, left, right) {
+            let rightValue = array[right];
+            array[right] = array[left];
+            array[left] = rightValue;
+        }
+
+        //插入排序(时间复杂度O(n*n))
+        function insertion(array){
+            checkArray(array);
+            for(let i=1;i<array.length;i++){
+                for(let j=i-1;j>=0&&array[j]>array[j+1];j--){
+                    swap(array,j,j+1);
+                }
+            }
+            return array;
+        }
+
+    </script>
+</body>
+</html>

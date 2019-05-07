@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function Stack() {
+            var items = [];
+            //从栈顶放元素，也叫压栈 
+            this.push = function (item) {
+                items.push(item);
+            };
+
+            // 弹出（取出）栈顶元素
+            this.pop = function () {
+                return items.pop();
+            };
+
+            // 返回栈顶元素
+            this.top = function () {
+                return items[items.length - 1];
+            };
+
+            //判断栈是否为空
+            this.isEmpty = function () {
+                return items.length == 0;
+            };
+
+            // 返回栈的大小
+            this.size = function () {
+                return items.length;
+            };
+
+            // 清空栈
+            this.clear = function () {
+                items = [];
+            }
+
+            // 简单理解为 私有属性（var items比this.items安全） 公有方法（通过方法访问属性，保护属性）
+        };
+        function Queue() {
+            var items = [];
+
+            // 向队列尾部添加一个元素
+            this.enqueue = function (item) {
+                items.push(item);
+            };
+
+            // 移除队列头部的元素
+            this.dequeue = function () {
+                return items.shift();
+            };
+
+            // 返回队列的头部元素
+            this.head = function () {
+                return items[0];
+            };
+
+            // 返回队列的大小
+            this.size = function () {
+                return items.length;
+            };
+
+            // 清空队列
+            this.clear = function () {
+                items = [];
+            };
+
+            // 判断是否为空队列
+            this.isEmpty = function () {
+                return items.length == 0;
+            };
+
+            // 返回队列尾部的元素
+            this.tail = function () {
+                return items[items.length - 1];
+            }
+        };
+        // 无向图类
+        var Graph = function () {
+            // 顶点
+            var vertices = [];
+            // 边
+            var adjList = {};
+            // 添加顶点
+            this.addVertex = function (v) {
+                vertices.push(v);
+                adjList[v] = [];
+            };
+            // 添加边
+            this.addEage = function (a, b) {
+                adjList[a].push(b);
+                adjList[b].push(a);
+            };
+
+            // 广度优先遍历----利用队列
+            // white 未发现
+            // grey  已发现未探索
+            // black 已探索
+            var initColor = function () {
+                var color = {};
+                // console.log(vertices);
+                // console.log(vertices.length);
+                for (var i = 0; i < vertices.length; i++) {
+                    color[vertices[i]] = "white";
+                }
+                return color;
+            };
+            // 最短路径
+            this.BFS = function (v) {
+                var color = initColor();
+                /*
+                color={
+                    A:"white",
+                    B:"white",
+                    ...
+                }
+                */
+                var queue = new Queue();
+                queue.enqueue(v);
+
+                var d = {};//距离
+                var pred = {};//回溯点
+                // 初始化
+                for (var i = 0; i < vertices.length; i++) {
+                    d[vertices[i]] = 0;
+                    pred[vertices[i]] = null;
+                }
+
+                while (!queue.isEmpty()) {
+                    var now = queue.dequeue();
+                    var bian = adjList[now];
+                    for (var i = 0; i < bian.length; i++) {
+                        var w = bian[i];
+                        if (color[w] === 'white') {
+                            // 未发现的全部入队，并且标识问已发现
+                            color[w] = 'grey';
+
+                            // 设置回溯点
+                            pred[w] = now;
+                            d[w] = d[now] + 1;
+
+                            queue.enqueue(w);
+                        }
+                    }
+                    color[now] = 'black';
+                }
+                return {
+                    pred: pred,
+                    d: d
+                }
+            };
+        };
+        var g = new Graph();
+        g.addVertex("A");
+        g.addVertex("B");
+        g.addVertex("C");
+        g.addVertex("D");
+        g.addVertex("E");
+        g.addVertex("F");
+
+        g.addEage("A", "B");
+        g.addEage("A", "C");
+        g.addEage("A", "D");
+        g.addEage("C", "D");
+        g.addEage("B", "E");
+        g.addEage("B", "F");
+
+        // 添加新的路径
+        g.addEage("D", "F");
+        var s=g.BFS("A");
+        console.log(s);
+
+        // 广度优先算法能保证每个点的回溯点是最近的
+        var zuiduan = function (from, to) {
+            var v = to;//设置当前点
+            var path=new Stack();
+            while(v!==from){
+                path.push(v);
+                v=s.pred[v];    //找回溯点
+                
+            }
+            path.push(v);
+
+            var str="";
+            while(!path.isEmpty()){
+                str+=path.pop()+"-";
+            }
+            str=str.slice(0,str.length-1);
+            console.log(str);
+        };
+
+        zuiduan("A","F");
+    </script>
+</body>
+
+</html>

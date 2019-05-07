@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //书写形式一
+        function fun(n,o){
+            console.log(o);
+            return {
+                fun:function(m){
+                    return fun(m,n);
+                }
+            }
+        }
+        var a=fun(0);//undefined
+        a.fun(1);//0
+        a.fun(2);//0
+        a.fun(3);//0
+        var b=fun(0).fun(1).fun(2).fun(3);//undefined->0->1->2
+        var c=fun(0).fun(1);//undefined->0
+        c.fun(2);// 1
+        c.fun(3)//1
+
+
+        //书写形式二
+        function fun(n,o){
+            console.log(o);
+            return function(m){
+                    return fun(m,n);
+                }
+        }
+       var x=fun(0);
+       x(1);
+       x(2);
+       x(3);
+       var y=fun(0)(1)(2)(3);
+       var z=fun(0)(1);
+       z(2);
+       z(3);
+
+
+    </script>
+</body>
+</html>

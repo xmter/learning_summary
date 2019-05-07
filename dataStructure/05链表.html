@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    //定义链表
+    function LinkList(){
+
+        //辅助类：节点类
+       var Node=function(data){
+            this.data=data;
+            this.next=null;
+        };
+
+        var length=0;
+        var head=null;
+
+
+        //链表尾部添加一个节点
+        this.append=function(data){
+            var node=new Node(data);
+
+            if(head==null){
+                head=node;
+            }else{
+                var curr=head;
+                while(curr.next){
+                    curr=curr.next;
+                }
+                curr.next=node;
+            }
+            length++;
+        };
+        //获取链表的头
+        this.gethead=function(){
+            return head;
+        };
+        //删除某个位置的节点
+        this.removeAt=function(position){
+            if(position>-1&&position<length){
+                if(position==0){
+                    var current=head;
+                    head=current.next;
+                }else{
+                    var current=head;
+                    var previous=null;
+                    var index=0;
+                    while(index<position){
+                        previous=current;
+                        current=current.next;
+                        index++;
+                    }
+                    // 跳出循环的时候，index==position
+                    previous.next=current.next;
+                }
+                length--;
+                return current;
+            }
+            return null;
+        }
+        //获取某个元素的位置
+        this.indexOf=function(data){
+            var curr=head;
+            var index=0;
+            while(curr){
+                if(curr.data==data){
+                    return index;
+                }
+
+                curr=curr.next;
+                index++;
+            }
+            return -1;
+        };
+        // removeAt(position) 删除某个位置的元素
+        // indexOf(element)   获取某个元素的位置
+        this.remove=function(data){
+            return removeAt(indexOf(data));
+        }
+        // 判断链表是否为空
+        this.isEmpty=function(){
+           return head==null;
+        }
+
+    };
+    var linklist=new LinkList();
+    
+    linklist.append(1);
+    linklist.append(2);
+    linklist.append(3);
+    linklist.append(4);
+    console.log(linklist.gethead());
+    console.log(linklist.indexOf(3));
+
+    </script>
+</body>
+</html>

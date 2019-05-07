@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 定义链表类
+        function LinkList() {
+            // 定义节点
+            var Node = function (data) {
+                this.data = data;
+                this.next = null;
+            }
+
+            var length = 0;   //长度
+            var head = null;  //头节点
+            var tail = null;  //尾节点
+
+            // 添加一个节点
+            this.append = function (data) {
+                // 创建新节点
+                var node = new Node(data);
+                // 如果是空链表
+                if (head == null) {
+                    head = node;
+                    tail = head;
+                } else {
+                    tail.next = node; //尾结点指向新创建的节点
+                    tail = node;  //tail指向链表最后一个节点
+                }
+                length += 1;  //长度加1
+                return true;
+            };
+            //获取链表的头
+            this.getHead = function () {
+                return head;
+            }
+            // 输出链表
+            this.print = function () {
+                var curr_node = head;
+                var str_link = "";
+                while (curr_node) {
+                    str_link += curr_node.data.toString() + "->";
+                    curr_node = curr_node.next;
+                }
+                str_link += "null";
+                console.log(str_link);
+                console.log("长度为" + length.toString());
+            };
+
+            // 插入元素
+            this.insert = function (index, data) {
+                if (index < 0 || index > length) {
+                    return false;
+                } else if (index == length) {
+                    return this.append(data);
+                } else {
+                    var new_node = new Node(data);
+                    // new_node成为新的头节点
+                    if (index == 0) {
+                        new_node.next = head;
+                        head = new_node;
+                    } else {
+                        var insert_index = 1;
+                        var curr_node = head; //curr_node是要插入位置的前一个节点
+                        while (insert_index < index) {
+                            insert_index += 1;
+                            curr_node = curr_node.next;
+                        }
+                        //index=1,curr_node指向head，是第一个节点
+                        var next_node = curr_node.next;   //next_node是第二个节点
+                        //第一个节点指向了新的节点
+                        curr_node.next = new_node;
+                        //新的节点指向了第二个节点
+                        new_node.next = next_node;
+
+                    }
+                }
+
+            };
+
+            //删除某个位置的节点
+            this.removeAt = function (position) {
+                if (position > -1 && position < length) {
+                    if (position == 0) {
+                        var current = head;
+                        head = current.next;
+                    } else {
+                        var current = head;
+                        var previous = null;
+                        var index = 0;
+                        while (index < position) {
+                            previous = current;
+                            current = current.next;
+                            index++;
+                        }
+                        // 跳出循环的时候，index==position
+                        previous.next = current.next;
+                    }
+                    length--;
+                    return current;
+                }
+                return null;
+            }
+            //获取某个元素的位置
+            this.indexOf = function (data) {
+                var curr = head;
+                var index = 0;
+                while (curr) {
+                    if (curr.data == data) {
+                        return index;
+                    }
+
+                    curr = curr.next;
+                    index++;
+                }
+                return -1;
+            };
+            // removeAt(position) 删除某个位置的元素
+            // indexOf(element)   获取某个元素的位置
+            this.remove = function (data) {
+                return this.removeAt(this.indexOf(data));
+            }
+            // 判断链表是否为空
+            this.isEmpty = function () {
+                return head == null;
+            }
+            // 获取指定索引位置的节点，需要传入参数index
+            this.get = function (index) {
+                if (index < 0 || index >= length) {
+                    return null;
+                }
+                var node_index = 0;
+                var curr_node = head;
+                while (node_index < index) {
+                    node_index += 1;
+                    curr_node = curr_node.next;
+                }
+                return curr_node.data;
+            }
+
+        };
+        // 类
+        var HashTable_L = function () {
+            var table = [];
+            // 定位
+            var loseloseHashCode = function (key) {
+                var hash = 0;
+                for (var i = 0; i < key.length; i++) {
+                    hash = key[i].charCodeAt();
+                }
+                return hash % 37;
+            };
+            // 辅助类
+            var Node = function (key, value) {
+                this.key = key;
+                this.value = value;
+            };
+            //存放
+            this.put = function (key, value) {
+                var position = loseloseHashCode(key);
+                if (table[position]) {
+                    table[position].append(new Node(key, value));
+                } else {
+                    var l = new LinkList();
+                    table[position] = l;
+                    table[position].append(new Node(key, value));
+                }
+            };
+            //获取值
+            this.get = function (key) {
+                var position = loseloseHashCode(key);
+                if (table[position]) {
+                    // 链表线性查找
+                    var current = table[position].getHead();
+                    while (current) {
+                        if (current.data.key == key) {
+                            return current.data.value;
+                        }
+                        current = current.next;
+                    }
+                } else {
+                    return undefined;
+                }
+            };
+            // 删除元素
+            this.remove = function (key) {
+                var position = loseloseHashCode(key);
+                if (table[position]) {
+                    //删除
+                    // remove(element)
+                    var current = table[position].getHead();
+                    while (current) {
+                        if (current.data.key == key) {
+                            // 查到了对应的key了
+                            table[position].remove(current.data);
+                            if (table[position].isEmpty()) {
+                                table[position] = undefined;
+                            }
+                            return true;
+                        }
+                        current = current.next;
+                    }
+                } else {
+                    return false;
+                }
+            };
+            //获取私有变量
+            this.getTable = function () {
+                return table;
+            };
+        };
+        var htl = new HashTable_L();
+        htl.put("ad", "11111");
+        htl.put("bc", "22222");
+         console.log(htl.getTable());
+         console.log(htl.get("bc"));
+         htl.remove("bc");
+        console.log(htl.getTable());
+        console.log(htl.get("bc"));
+    </script>
+</body>
+
+</html>

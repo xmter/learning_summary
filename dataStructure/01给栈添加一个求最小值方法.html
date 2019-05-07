@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function Stack(){
+            var items=[];
+            //从栈顶放元素，也叫压栈 
+            this.push=function(item){
+                items.push(item);
+            };
+
+            // 弹出（取出）栈顶元素
+            this.pop=function(){
+                return items.pop();
+            };
+
+            // 返回栈顶元素
+            this.top=function(){
+                return items[items.length-1];//注意呀，写成items[length-1]是多可怕。
+            };
+
+            //判断栈是否为空
+            this.isEmpty=function(){
+                return items.length==0;
+            };
+
+            // 返回栈的大小
+            this.size=function(){
+                return items.length;
+            };
+
+            // 清空栈
+            this.clear=function(){
+                items=[];
+            }
+        };
+
+       
+
+        function MinStack() {
+            var data_stack = new Stack(); // 普通的栈
+            var min_stack = new Stack(); // 专⻔门存储最⼩小值
+            // push的时候,两个栈都要操作
+            this.push = function (item) {
+                data_stack.push(item); // data_stack是常规栈,常规操作即可
+                // 如果min_stack为空,直接放⼊入,如果item⼩小于min_stack栈顶元素,放⼊入其中
+                // 这样做的⽬目的,是保证min_stack的栈顶始终保存栈的最⼩小值
+                if (min_stack.isEmpty() || item < min_stack.top()) {
+                    min_stack.push(item);
+                } else {
+                    // 如果item⼤大于等于栈顶元素,把min_stack的栈顶元素再放⼊入⼀一次
+                    // min_stack的元素个数要和data_stack 保持⼀一致
+                    min_stack.push(min_stack.top());
+                }
+            };
+            // pop的时候,两个栈都pop
+            this.pop = function () {
+                data_stack.pop();
+                min_stack.pop();
+            };
+            // 直接取栈顶的元素
+            this.min = function () {
+                return min_stack.top();
+            };
+        };
+        minstack = new MinStack();
+        minstack.push(3);
+        minstack.push(6);
+        minstack.push(8);
+        console.log(minstack.min());
+        minstack.push(2);
+        console.log(minstack.min());
+    </script>
+</body>
+
+</html>
