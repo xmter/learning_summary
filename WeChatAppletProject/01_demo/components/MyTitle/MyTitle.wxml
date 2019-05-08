@@ -1,0 +1,19 @@
+<!--components/MyTitle/MyTitle.wxml-->
+<view class="my_title">
+    <!-- logo 用一个超链接navigator -->
+    <navigator class="logo">
+        <image style="width:140rpx;height:60rpx;" class="logo_img" src="../../icons/logo.png"></image>
+    </navigator>
+    <!-- 搜索 -->
+    <view class="search_icon">
+        <image style="width:60rpx;height:50rpx;" class="" src="../../icons/sreach.png"></image>  
+    </view>
+    <!--用户-->
+    <view class="user_icon">
+        <image style="width:70rpx;height:66rpx;" class="" src="../../icons/user.png"></image>  
+    </view>
+    <!-- 下载按钮 -->
+    <view class="down_app">
+        下载APP
+    </view>
+</view>
