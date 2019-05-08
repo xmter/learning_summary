@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .red{
+            color: red;
+        }
+        .thin{
+            font-weight: 200;
+        }
+        .italic{
+            
+            font-style: italic;
+        }
+        .active{
+            letter-spacing: 2em;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 普通写法 -->
+        <!-- <h1 class="red thin italic active">我是一个大大的h1</h1> -->
+        <!-- v-bind结合数组 -->
+        <!-- <h1 :class="['red', 'thin', 'italic', 'active']">我是一个大大的h1</h1> -->
+        <!-- v-bind结合数组 并结合三元运算符 -->
+        <!-- <h1 :class="['red', 'thin', 'italic', flag?'active':'']">我是一个大大的h1</h1> -->
+        <!-- v-bind结合数组 将三元运算符转化为对象 -->
+        <!-- <h1 :class="['red', 'thin', 'italic', {'active':true}]">我是一个大大的h1</h1> -->
+        <!-- v-bind 结合对象 -->
+        <!-- <h1 :class="{red:false,thin:true,italic:true,active:true}">我是一个大大的h1</h1> -->
+        <!--  -->
+        <h1 :class="classObj">我是一个大大的h1</h1>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+        var VM=new Vue({
+            el:"#app",
+            data:{
+                flag:false,
+                classObj:{red:false,thin:true,italic:false,active:true}
+            },
+            methods:{
+
+            }
+        });
+    </script>
+</body>
+</html>

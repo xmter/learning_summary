@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p v-for="(item,index) in list">每一项是：{{item}}----索引是：{{index}}</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+        var VM=new Vue({
+            el:"#app",
+            data:{
+                list:{
+                    name:"xu",
+                    age:15,
+                    hobby:'吃'
+                }
+            },
+            methods:{
+
+            }
+        });
+    </script>
+</body>
+</html>

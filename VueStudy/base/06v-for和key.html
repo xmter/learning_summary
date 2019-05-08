@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        id:
+        <input type="text" v-model="id">
+        name:
+        <input type="text" v-model="name">
+        <input type="button" value="添加" @click="add">
+        <div>
+            <p v-for="(item,index) in list" :key="item.id"> 
+                <input type="checkbox">{{item.id}}--{{item.name}}
+            </p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+        var VM=new Vue({
+            el:"#app",
+            data:{
+                id:"",
+                name:"",
+                list:[
+                    {id:1,name:'xu1'},
+                    {id:2,name:'xu2'},
+                    {id:3,name:'xu3'},
+                    {id:4,name:'xu4'},
+                ],
+            },
+            methods:{
+                add(){
+                //    this.list.push({id:this.id,name:this.name}); 
+                this.list.unshift({id:this.id,name:this.name}); 
+                }
+            }
+        });
+    </script>
+</body>
+</html>

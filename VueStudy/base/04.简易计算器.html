@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="n1">
+        <select name="" id="" v-model="opt">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="text" v-model="n2">
+        <input type="button" value="=" @click="calculate">
+        <input type="text" v-model="result">
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+        var VM=new Vue({
+            el:"#app",
+            data:{
+                n1:"0",
+                n2:"0",
+                result:"0",
+                opt:"+"
+            },
+            methods:{
+                calculate(){
+                    // 计算逻辑
+                    // switch(this.opt){
+                    //     case '+':this.result=parseFloat(this.n1)+parseFloat(this.n2);
+                    //     break;
+                    //     case '-':this.result=parseFloat(this.n1)-parseFloat(this.n2);
+                    //     break;
+                    //     case '*':this.result=parseFloat(this.n1)*parseFloat(this.n2);
+                    //     break;
+                    //     case '/':this.result=parseFloat(this.n1)/parseFloat(this.n2);
+                    //     break;
+                    // }
+
+                    // 方法二：使用eval()
+                    var codeStr='parseFloat(this.n1)'+this.opt+'parseFloat(this.n2)';
+                    this.result=eval(codeStr);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

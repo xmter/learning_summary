@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .inner {
+            width: 100%;
+            height: 200px;
+            background-color: aquamarine;
+        }
+        .outter{
+            border: 40px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 默认有冒泡事件 -->
+        <!-- <div class="inner" @click="innerDiv">
+            <input type="button" value="按钮" @click="btn">
+        </div> -->
+        <!-- .stop 阻止冒泡 -->
+        <!-- <div class="inner" @click="innerDiv">
+                <input type="button" value="按钮" @click.stop="btn">
+        </div> -->
+
+        <!-- .capture 改为捕获事件 -->
+        <!-- <div class="inner" @click.capture="innerDiv">
+            <input type="button" value="按钮" @click="btn">
+        </div> -->
+
+        <!-- .slef 只是阻止自己身上的行为 -->
+        <!-- <div class="outter" @click="outterDiv">
+            <div class="inner" @click.self="innerDiv">
+                <input type="button" value="按钮" @click="btn">
+            </div>
+        </div> -->
+        <!-- .prevent 阻止事件的默认行为 -->
+        <!-- <a href="http://baidu.com" @click.prevent="link">去百度</a> -->
+
+        <!-- .once 事件只触发一次  -->
+        <!-- <a href="http://baidu.com" @click.prevent.once="link">去百度</a> -->
+        <a href="http://baidu.com" @click.once.prevent="link">去百度</a>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+        var VM = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+                innerDiv() {
+                    console.log("触发了inner Div 事件");
+                },
+                btn() {
+                    console.log("触发了 button 事件");
+                },
+                outterDiv(){
+                    console.log("触发了outter Div 事件");
+                },
+                link(){
+                    console.log("触发了 a 事件");
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
