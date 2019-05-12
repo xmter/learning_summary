@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .wrapper {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            margin: 50px auto;
+        }
+
+        .pan {
+            width: 100%;
+            height: 100%;
+        }
+
+        .pan img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .btn {
+            width: 130px;
+            height: 130px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -65px;
+            margin-top: -65px;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+        .btn img {
+            width: 100%;
+            position: absolute;
+            top: -23px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="btn"><img src="./img/btn.png"></div>
+        <div class="pan"><img src="./img/pan.png"></div>
+    </div>
+    <script>
+        /**
+         * 思路分析：点击 转 随机生成一个角度
+         */
+        // 普通版
+        var btn = document.getElementsByClassName('btn')[0];
+        var bigWheel = document.getElementsByClassName('pan')[0];
+        var bool = true;//开关
+        var num = 0;
+        btn.onclick = function () {
+            if (bool) {
+                num = Math.floor(Math.random() * 360);
+                // console.log(num);
+                tableRun(num);
+                bool = false;
+            }
+
+        }
+        bigWheel.addEventListener("transitionend", function () {
+            // console.log('over');
+            bool = true;
+            judgeFn(num);//判断函数
+
+            bigWheel.style.transform = 'rotate(' + num + 'deg)';
+            bigWheel.style.transition = 'none';
+
+        });
+        // 旋转函数
+        function tableRun(deg) {
+            var myNum = deg + 8 * 360;
+            bigWheel.style.transform = 'rotate(' + myNum + 'deg)';
+            bigWheel.style.transition = 'all 4s';
+        }
+        // 判断获奖情况函数
+        function judgeFn(deg) {
+            var str = '';
+            if (deg < 45 && deg < 270 && deg > 0) {
+                //二等奖
+                str = '二等奖';
+            } else if (deg > 90 && deg < 135 || deg > 270 && deg < 315) {
+                //三等奖
+                str = '三等奖';
+            } else if (deg > 45 && deg < 90 || deg > 135 && deg < 180 || deg > 225 && deg < 270 || deg > 315 && deg < 360) {
+                //四等奖
+                str = '四等奖';
+            } else if (deg > 180 && deg < 225) {
+                str = '一等奖';
+                //一等奖
+            }
+
+            alert('大吉大利 恭喜获得' + str + '!');
+        }
+
+        /**
+         * 普通代码的缺点：全局变量太多
+        */
+
+        /**
+         * 一个好的代码应具备：
+         * 1.让我们的代码可维护性，复用性
+         * 2.变量的语义化 看懂
+         * 3.全局变量的污染，尽量少用
+         * 4.模块化 封装思想 设计模式
+         * 
+         * 
+         * 优化代码的基本方法：
+         * 1 函数封装 ----最初的封装和模块的思想---用到闭包和函数式编程 函数柯里化
+         * function add(a,b){
+         *      return a+b；
+         * }
+         *
+         *2.对象式编程
+         *var obj={
+         *   name:"xxx",
+         *   init:function(){
+         *       this.getName();
+         *   },
+         *   getName:function(){
+         *       
+         *   }
+         * }
+         *obj.init();
+         *
+         *3.立即执行函数
+         *  var laodeng=(function(){
+         *      var name='xxx';
+         *      function abc(){
+         *         console.log(name);
+         *      }
+         *      return {
+         *         adc:abc
+         *      }
+         *   })()
+        4.构造函数 new 对象原型 原型链 ----jquery源码采用的方法
+        *  (function(a,b){
+        *         b(a);
+        *  })(window,function(widow){
+        *       window.jquery=jquery=$;
+        *       function jquery(){
+        * 
+        *       }
+        *       jquery.prototype.init=function(){
+        *    
+        *       }
+        * })
+        *应用：nodejs 模块化思想  GULP WEBPACK   VUE REACT
+        */
+
+        // 优化版
+        function Lottery(pars) {
+            // this.pars=pars||{};
+            this.pars = Object.assign(defualtpars, pars);//new Lottery(pars),不传参数pars时，防止报错 pars覆盖默认对象 
+            this.bool = true;
+            this.init();
+        };
+
+        Lottery.prototype.init = function () {
+            var self = this;
+            console.log(this.pars);
+            this.pars.btn = this.pars.turnbody.getElementsByClassName('btn')[0];
+            this.pars.bigWheel = this.pars.turnbody.getElementsByClassName('pan')[0];
+
+            this.pars.btn.addEventListener('click', function (e) {
+                if (self.bool) {
+                    self.pars.clickFun();
+                    self.bool = false;
+                }
+            });
+
+            this.pars.bigWheel.addEventListener('transitionend', function () {
+
+                self.pars.bigWheel.style.transform = 'rotate(' + self.pars.myNum + 'deg)';
+                self.pars.bigWheel.style.transition = 'none';
+
+                self.pars.judgeFun(self.pars.myNum);
+
+                self.bool = true;
+            });
+        };
+        Lottery.prototype.tableRun = function (deg) {
+            var num = deg + this.pars.rotateNum * 360;
+
+            this.pars.bigWheel.style.transform = 'rotate(' + num + 'deg)';
+            this.pars.bigWheel.style.transition = 'all 4s';
+
+            this.pars.myNum = deg;
+            console.log(this.pars);
+        };
+
+
+        // 配置对象
+        var pars = {
+            rotateNum: 8,
+            turnbody: document.getElementsByTagName("body")[0],
+            clickFun: click,
+            judgeFun: judge,
+        }
+        // 默认对象
+        var defualtpars = {
+            rotateNum: 5,
+            turnbody: document.getElementsByTagName('body')[0],
+            clickFun: function () {},
+            judgeFun: function () {}
+        }
+
+
+        function click() {
+            var num = Math.floor(Math.random() * 360);
+            lottery.tableRun(num);
+        }
+        function judge(deg){
+            var str = '';
+            if (deg < 45 && deg < 270 && deg > 0) {
+                //二等奖
+                str = '二等奖';
+            } else if (deg > 90 && deg < 135 || deg > 270 && deg < 315) {
+                //三等奖
+                str = '三等奖';
+            } else if (deg > 45 && deg < 90 || deg > 135 && deg < 180 || deg > 225 && deg < 270 || deg > 315 && deg < 360) {
+                //四等奖
+                str = '四等奖';
+            } else if (deg > 180 && deg < 225) {
+                str = '一等奖';
+                //一等奖
+            }
+            alert('大吉大利 恭喜获得' + str + '!')
+        }
+
+
+
+        var lottery = new Lottery(pars);
+
+    </script>
+</body>
+
+</html>
