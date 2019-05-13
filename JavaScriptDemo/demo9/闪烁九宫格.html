@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- head 中是给浏览器和程序员看的 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+        }
+        .container{
+            width: 330px;
+            margin: 0 auto;
+        }
+        .cubes{
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: repeat(3,110px);
+            grid-template-rows: repeat(3,110px);
+        }
+        .cubes>div{
+            border-radius: 5px;
+            width: 90px;
+            height: 90px;
+            background-color: #ff0;
+        }
+        .bth{
+            display: block;
+            width: 296px;
+            height: 36px;
+            border: 2px solid orange;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 36px;
+            color: orange;
+            font-weight: bolder;
+        }
+        .bth:hover{
+            background-color: orange;
+            color: #ffff;
+        }
+    </style>
+</head>
+    <!--body 中是页面中所显示的内容  -->
+<body>
+    <div class="container">
+        <div class="cubes" id="cubeBox">
+            <!-- <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div> -->
+        </div>
+        <a href="javascript:;" class="bth" id='btn'>点击开始显示</a>
+    </div>
+    <script>
+        var cubBox=document.getElementById('cubeBox');
+        // console.log(cubBox);
+        var btn=document.getElementById('btn');
+        var cubs=cubBox.getElementsByTagName("div");
+
+        var str='',
+            flag=false,
+            colorArr=["#096","red","green","orange","blue","black","#369","pink","#333"],
+            timer=null;
+        // 创建九宫格
+        for(var i=0;i<9;i++){
+            str +="<div></div>";
+        }
+        cubBox.innerHTML=str;
+
+        // for(var i=0;i<9;i++){
+        //     var div=document.createElement('div');
+        //     cubBox.appendChild(div);
+        // }
+
+        function shanshuo(){
+            flag=!flag;
+            if(flag){
+                btn.innerHTML='点击停止闪烁';
+                timer=window.setInterval(function(){
+                    var obj={};
+                    // 任意三个闪烁
+                    for(var i=0;i<3;i++){
+                        var num=Math.ceil(Math.random()*8);
+                        // console.log(num);
+                        if(typeof obj[num]!=="undefined"){
+                            i--;
+                        }
+                        obj[num]=num;
+                        cubs[num].style.backgroundColor=colorArr[num];
+                    }
+                    // 任意按个闪烁完之后，要恢复原样
+                    window.setTimeout(function(){
+                        for(var j=0,len=cubs.length;j<len;j++){
+                           var cub=cubs[j];
+                           cub.style.backgroundColor="yellow";
+                        }
+                    },500);
+                },1000);
+            }else{
+                // 清除计时器
+                clearInterval(timer);
+                btn.innerHTML='点击开始闪烁';
+            }
+        }     
+        btn.onclick=shanshuo;
+    </script>
+</body>
+
+</html>
