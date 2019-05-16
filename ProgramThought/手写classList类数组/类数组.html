@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        ES5：6种数据类型 ：string undefined number boolean  object function
+
+        特殊的对象：[],null
+
+        //数组是特殊的对象
+        /**
+        如何特殊？
+          对象属性是数字（索引）
+          有length属性
+        */
+
+     -->
+     <!-- 
+         类数组本质是对象
+      -->
+      <script>
+        //   ***********************************111***********************************
+        // var o={0:"a",1:"b",2:"c"};
+        // Object.defineProperty(o,"length",{
+        //      value:3,
+        //      enumberable: false//length 不可枚举、迭代  是私有属性
+        //  });
+        //  for(var prop in o){
+        //      console.log(prop);
+        //  }
+        //  console.log(o);
+
+        //  **********************************222**************************************
+        var o={0:"a",1:"b",2:"c",length:3};
+        
+        [].push.call(o,'d');//类数组添加元素借助空数组和call来添加索引元素
+        
+        //  o.__proto__=Object.prototype;默认原型是对象Object
+        //  o.__proto__=Array.prototype;//改变，现在原型是数组Array，所以o变成了数组
+        // 妲己 原型:狐狸 所以说妲己是狐狸,它具备狐狸身上的所有特性 ,简单的说原型就是它的本质 
+        
+        // 修正o的原型，让 o.__proto__=Object.prototype;变成o.__proto__={};
+        o.__proto__={
+            each:function(){
+                // console.log(this);
+                for(var index in this){
+                    if(isNaN(index)) continue;
+                    func(index,this[index]); 
+                }
+            }
+        };
+        
+        o.each(function(index,value){
+            console.log(index);
+        });
+  
+      </script>
+</body>
+</html>

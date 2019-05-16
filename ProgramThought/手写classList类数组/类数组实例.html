@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="classA classB classAB" id="mydiv"></div>
+    <span id="myspan"></span>
+    <a href="" id="mylink"></a>
+    <script>
+        // className 是字符串 
+        console.log(mydiv.className);//classA classB classAB
+        // mydiv.className.split(" ").push("classC").join(" ");
+        // classList 是类数组 有add remove toggle[替换]
+        console.log(mydiv.classList);//DOMTokenList(3)["classA", "classB", "classAB", value: "classA classB classAB"]
+        // mydiv.classList.add("classD");
+        // mydiv.classList.remove("classC");
+        // mydiv.classList.toggle("classA");
+
+
+        //DOMTokenList(classList) ----去实现 NeDOMTokenList(neClassList)
+
+        //给所有dom元素添加属性neclassList
+        //mydiv.classList
+        //mydiv.neclassList 
+
+        //思维编程 ---探索
+        // 对象都有它的构造器
+        console.log([].constructor);//ƒ Array() { [native code] }
+        //console.log(null.constructor);//注意：本来有，又因为它代表空，就被干掉了
+        console.log(mydiv.constructor);//ƒ HTMLDivElement() { [native code] }，所以它的构造器是HTMLDivElement
+        //类推...   
+        console.log(myspan.constructor);//ƒ HTMLSpanElement() { [native code] }
+        console.log(mylink.constructor);//ƒ HTMLAnchorElement() { [native code] }
+
+        //继承自谁。。。   
+        console.log(HTMLElement); //ƒ HTMLElement() { [native code] }
+        console.log(mydiv instanceof HTMLElement);//true
+        //所有的dom元素都是HTMLElement的子类   
+
+
+        //那如何让所有的dom元素都有一个neclassList这个属性-----所以在HTMLElement的原型上添加一个neclassList属性
+        Object.defineProperty(HTMLElement.prototype, 'neclassList', {
+            get: function () {
+                //console.log('我被调用了');
+                // return this.className.split(" ");
+                // 单例模式
+                // 第一次是没有__dtl__属性 则new
+                // 再几次都有，直接返回这个属性
+                if (!this.__dtl__) {
+                    this.__dtl__ = new NeDOMTokenList(this.className.split(" "), this);
+                }
+                return this.__dtl__;
+                // 该函数最终返回的是NeDOMTokenList的一个实例 ，并将className传过去 和该dom元素传过去
+            }
+        });
+        // mydiv.neclassList;
+
+        // console.log(mydiv.neclassList);//Uncaught TypeError: mydiv.neclassList.add is not a function
+        /*原因是 代码顺序问题 打印mydiv.neclassList时 new NeDOMTokenList(),虽然function NeDOMTokenList(){}函数提升了
+        但 NeDOMTokenList.prototype={}并不提升 ，所以这个实例不具备后来添加的那些静态方法。*/
+
+        // NeDOMTokenList 构造器
+        function NeDOMTokenList(classes, dom) {
+            //this是实例    
+            [].push.apply(this, classes);//类数组
+
+            // 与html中className同步---更新
+            Object.defineProperty(this, 'value', {
+                enumerable: true,
+                get: function () {
+                    // console.log( dom.className);
+                    return  dom.className;
+                },
+                set: function (nv) {
+                    // console.log(nv);
+                    dom.className = nv;
+                }
+            });
+        };
+
+        // NeDOMTokenList.prototype = {
+        //     constructor: NeDOMTokenList,
+        //     add: function add(clazz) {
+        //         if (this.contains(clazz)) return;
+        //         [].push.call(this, clazz);
+
+        //         this.value = [].join.call(this, ' ');
+        //     },
+        //     remove: function remove(clazz) {
+        //         for (var i = 0; i < this.length; i++) {
+        //             if (clazz === this[i]) {
+        //                 [].splice.call(this, i, 1);
+
+        //                 this.value = [].join.call(this, ' ');
+
+        //                 return clazz;
+        //             }
+        //         }
+        //     },
+        //     contains: function contains(clazz) {
+        //         return [].includes.call(this, clazz);
+        //     },
+        //     toggle: function toggle() {
+        //         this.contains(clazz) ? this.remove(clazz) : this.add(clazz);
+
+        //         this.value = [].join.call(this, ' ');
+        //     }
+        // };
+        NeDOMTokenList.prototype = Object.create(Array.prototype, {
+            constructor: {
+                value: NeDOMTokenList
+            },
+            add: {
+                value: function (clazz) {
+                    if (this.contains(clazz)) return;
+                    [].push.call(this, clazz);
+
+                    this.value = [].join.call(this, ' ');
+                }
+            },
+            remove: {
+                value: function (clazz) {
+                    for (var i = 0; i < this.length; i++) {
+                        if (clazz === this[i]) {
+                            [].splice.call(this, i, 1);
+
+                            this.value = [].join.call(this, ' ');
+
+                            return clazz;
+                        }
+                    }                   
+                }
+            },
+            contains: {
+                value: function (clazz) {
+                    return [].includes.call(this, clazz);
+                }
+            },
+            toggle: {
+                value: function () {
+                    this.contains(clazz) ? this.remove(clazz) : this.add(clazz);
+
+                    this.value = [].join.call(this, ' ');
+
+                }
+            }
+        });
+
+        mydiv.neclassList.add('classC');
+        console.log(mydiv.neclassList);
+        console.log(mydiv.neclassList.contains('classA'));
+        console.log(mydiv.neclassList.remove('classB'));
+    </script>
+</body>
+
+</html>
