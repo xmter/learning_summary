@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./日历.css">
+    <style>
+       /* *{               
+           display: grid;
+           grid-template-columns: repeat(7,1fr);//平均分配
+           place-items: center;//字体居中
+           grid-row-gap: 10px;//行距
+       } */
+       /* 大项目---化为小部分 */
+       /* 
+       是否是闰年 4年一闰，百年不闰；400年一闰
+
+       1.这个月有多少天--根据年和月份
+
+       2.这个月的第一天是星期几
+       
+       */
+    </style>
+</head>
+<body>
+    <div class="calendar">
+        <div class="calendar-header">
+            <select id="selYear">
+
+            </select>
+            <span>年</span>
+            <select id="selMonth">
+
+            </select>
+            <span>月</span>
+            <button id="btnToToday">今天</button>
+        </div>
+        <div class="calendar-title">
+            <span>一</span>
+            <span>二</span>
+            <span>三</span>
+            <span>四</span>
+            <span>五</span>
+            <span>六</span>
+            <span>日</span>
+        </div>
+        <div class="calendar-content">
+
+        </div>
+    </div>
+
+    <script src='./日历.js'></script>
+</body>
+</html>

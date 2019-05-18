@@ -1,0 +1,45 @@
+.calendar{
+    width: 500px;
+    padding: 1em;
+    border: 1px solid;
+    border-radius: 5px;
+    background: #008c8c;
+    color: #fff;
+}
+.calendar-header{
+    /* 里面都是内联元素 --所以居中用text-align */
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.calendar-header select{
+    padding: 0 5px;
+    border-radius: 3px;
+}
+
+.calendar-title{
+    /* 网格布局 */
+    display: grid;
+    grid-template-columns: repeat(7,1fr);/*平均分配*/
+    place-items: center;/*文字居中*/
+}
+
+.calendar-content{
+    /* 网格布局 */
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    place-items: center;
+    grid-row-gap:15px;/*行距*/
+    margin-top: 15px;
+}
+
+.calendar-content .gray{
+    color: #9c9c9c;
+}
+
+.calendar-content .active{
+    padding: 5px;
+    border-radius: 50%;
+    background: #fff;
+    color: #008c8c;
+}
