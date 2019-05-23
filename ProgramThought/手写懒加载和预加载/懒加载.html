@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+   <button id='btn'>按钮</button>
+
+    <script>
+        // 先把这些资源的放在一个数组，需要的时候加载
+        var imgarr = [
+            'http://pic1.win4000.com/wallpaper/1/54977e4981369.jpg',
+            'http://image2.xyzs.com/upload/78/e1/110709/20130831/137796023651298_0.jpg',
+            'http://image1.xyzs.com/upload/c6/f3/111382/20130831/137796023398917_0.jpg',
+            ' http://image3.xyzs.com/upload/a2/b4/112369/20130831/137796022421499_0.jpg',
+        ];
+        var scriptarr=[,];
+
+        /**
+         * 
+         * @param {*} url ：定义的数组 
+         * @param {*} type ：加载的类型 img还是script
+         * @param {*} target ：插入到哪个元素里
+         */
+        function lazyloader(url, type, target) {
+            //首先 错误处理
+            // 必传参数
+            if (!url) throw new Error("the first arguments is not give");
+            if (!type) throw new Error("the second arguments is not give");
+            //非必传参数
+            var target = target || document.body;//默认参数
+
+            var calculator = {
+                img: function () {
+                    var img = new Image();
+                    return img;
+                },
+                js: function () {
+                    var script = document.createElement('script');
+                    return script;
+                }
+            }
+            // 多态，参数类型判断
+            if (typeof url == 'string') {
+                createDom(url);
+            } else {
+                // 若是数组
+                url.forEach(function (item, index) {
+                    createDom(item);
+                });
+            }
+
+            function createDom(url) {
+                var dom = calculator[type]();
+                dom.src = url;
+                target.appendChild(dom);
+            }
+        }
+
+        // // window.onload，页面渲染完后加载图片或script资源
+        // window.onload=function(){
+        //     lazyloader(imgarr,'img');
+        // }
+        // 按需加载
+        document.getElementById('btn').onclick=function(){
+            lazyloader(imgarr,'img');
+        }
+    </script>
+</body>
+
+</html>

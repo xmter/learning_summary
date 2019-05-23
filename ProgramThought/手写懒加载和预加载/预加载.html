@@ -1,0 +1,133 @@
+<!-- 
+
+    看到一个页面花费了哪些时间
+       （html字符串小，花费时间少）html页面请求----当我们输入url后 开始请求过来的是一段html字符串
+       （主要花费时间）页面资源请求----资源包括图片、css、js
+        页面绘制--------浏览器通过请求的html字符串和请求的资源绘制我们看到的网页
+    页面加载流程图
+        html文件下载----head资源解析---页面资源（js、css、图片）加载和Dom树渲染（body）同时进行
+    资源加载细节：
+        给资源优先级排队，并发出去，并不需要等上一个请求 响应再去请求下一个
+    页面资源如何加载：
+        一般来说，script和css资源是优先于图片资源的
+        一般来说，script执行时会***阻塞***后面的资源加载和渲染
+                 script1 finished后 script2 从pendding变为finished
+        请求是并发的，但是有最大并发限制的
+    所以对于资源我们可以做如下事
+        渲染相关资源放在head里 比如css 因为--页面加载流程图 head先加载解析
+            保证head树加载出来之后，然后再去渲染，造成屏幕闪一下，然后变成另外一个样式
+        依赖关系必须有先后顺序
+            A依赖B 则B必修放在A前 因为--script执行时会***阻塞***后面的资源加载和渲染
+        大的执行长的js程序，最好好挂载为异步 ----defer async 或懒加载
+    懒加载和预加载
+        懒加载==onload后加载，比如 首屏加载过慢，地图懒加载 、在线聊天联系客服
+        预加载==所有资源加载完后让用户看到，比如h5动画，小游戏 保证体验流畅
+
+
+
+
+
+
+       
+
+
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .cover {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 遮罩 -->
+    <div class="cover" id='cover'>
+            0%
+    </div>
+    <script>
+          // 先把这些资源的放在一个数组，需要的时候加载
+          var imgarr = [
+            'http://pic1.win4000.com/wallpaper/1/54977e4981369.jpg',
+            'http://image2.xyzs.com/upload/78/e1/110709/20130831/137796023651298_0.jpg',
+            'http://image1.xyzs.com/upload/c6/f3/111382/20130831/137796023398917_0.jpg',
+            ' http://image3.xyzs.com/upload/a2/b4/112369/20130831/137796022421499_0.jpg',
+        ];
+        var scriptarr=[,];
+
+        var coverDom=document.getElementById('cover');
+        /**
+        * 
+        * @param {*} cover ：遮罩层
+        * @param {*} resource :预加载资源列表
+        * @param {*} type ：加载的类型 img还是script
+        * @param {*} target ：插入到哪个元素里 
+        */
+        function preadd(cover, resource,type, target) {
+            //首先 错误处理
+            // 必传参数
+            if (!cover) throw new Error("the first arguments is not give");
+            if (!resource) throw new Error("the second arguments is not give");
+            if (!type) throw new Error("the third arguments is not give");
+            //非必传参数
+            var target = target || document.body;//默认参数
+
+            var calculator = {
+                img: function () {
+                    var img = new Image();
+                    return img;
+                },
+                js: function () {
+                    var script = document.createElement('script');
+                    return script;
+                }
+            }
+
+            var len = resource.length;//预加载资源的长度
+            var nowadd = 0;//记录当前加载到哪一个了
+
+            // 多态，参数类型判断
+            if (typeof resource == 'string') {
+                createDom(resource);
+            } else {
+                // 若是数组
+                resource.forEach(function (item, index) {
+                    createDom(item);
+                })
+            }
+
+            function createDom(resource) {
+                var dom = calculator[type]();
+                dom.src = resource;
+                dom.onload=function(){
+                    nowadd++;
+                    target.appendChild(dom);
+                    console.log(nowadd);
+                    cover.innerHTML=(nowadd/len)*100+"%";
+                    console.log(cover.innerHTML);
+                    if(nowadd==len){
+                        cover.style.display='none';
+                    }
+                }
+            }
+        }
+
+        preadd(coverDom, imgarr,'img');
+    </script>
+</body>
+
+</html>
