@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 缓存架构应该满足一下几点：
+        //1.兼容性（原生js）
+        //2.开闭原则（设计模式）----不大
+        //3.扩展性（无论资源还是数据缓存，无论内存还是文件或者是数据库）---插件多
+        //4.应用起来简单
+        //5.面向接口的设计
+
+        // 开始写
+
+        // 闭包
+
+        (function (global, factory, name) {
+            // 函数体
+
+            return global[name] = factory.call(global);
+        })(this, function () {
+            // 闭包环境
+            var __E_TYPES__ = {
+                MEMORY: 'MEMORY',
+            }
+            // 缓存引擎 
+            var __ENGINES__ = {
+                // 默认引擎--支持内存引擎
+                [__E_TYPES__.MEMORY]: {
+                    __init__: function () {
+                        this.pools = this.pools || {};
+                    },//此方法不想让外面人访问
+
+                    set: function (options) {
+                        this.pools || this.__init__();
+                        this.pools[options.key] = options.data;
+                        console.log('默认的内存缓存引擎的set');
+                    },
+                    get: function (options) {
+                        this.pools || this.__init__();
+                        console.log('默认的内存缓存引擎的get');
+                        return this.pools[options.key];
+                    },
+                    remove:function(){
+                        delete this.pools[options.key];
+                    }
+                },
+                // LOCAL_STORAGE: {
+                //     __init__: function () { },//此方法不想让外面人访问
+
+                //     set: function (options) { },
+                //     get: function (options) { }
+                // }
+            };
+
+            // 保护架构的核心功能---用单例模式
+            var __CACHE__ = {
+                // 需求
+                // 一类人
+                install: function (type, object) {
+                    __E_TYPES__[type] = type;
+                    __ENGINES__[type] = object;
+                    __ENGINES__[type].__init__();
+                },//安装某一个缓存机制
+                uninstall: function () { },//卸载某一个缓存机制
+                //另一类人    
+                set: function (type, ops) {
+                    __ENGINES__[type || __E_TYPES__.MEMORY].set(ops);
+                },//存
+                get: function (type, ops) {
+                    return __ENGINES__[type || __E_TYPES__.MEMORY].get(ops);
+                },//取
+                remove:function(type, ops){
+                    return __ENGINES__[type || __E_TYPES__.MEMORY].remove(ops);
+                }//移除
+            };
+            // __CACHE__.install(__ENGINES__.MEMORY);
+            // __ENGINES__[type].init();
+            // return  __CACHE__;
+            return {
+                TYPES: __E_TYPES__,
+                getInstance: function () {
+                    return __CACHE__;
+                }
+            }
+        }, 'NetEaseCaches');
+        // this 随着环境的改变，也不同
+        // BOM环境下运行这个js this===window
+        // nodejs环境下运行这个js this===modules
+        // seajs环境下运行这个js  this===define
+
+        console.log(NetEaseCaches);
+        var NEC = NetEaseCaches.getInstance();
+        console.log(NEC);
+        console.log(NetEaseCaches.TYPES);
+        NEC.set(NetEaseCaches.TYPES.MEMORY, {
+            key: 'name',
+            data: 'xiaojun'
+        });
+
+        console.log(NEC.get(NetEaseCaches.TYPES.MEMORY, {
+            key: 'name'
+        }));
+        // NEC.set();
+        // NEC.get();
+
+
+        // 安装一个新的缓存引擎
+        NEC.install('LOCAL_STORAGE', {
+            __init__: function () { 
+                console.log(localStorage);
+            },//此方法不想让外面人访问
+
+            set: function (options) {
+                console.log('自己安装的LOCAL_STORAGE的set');
+            },
+            get: function (options) {
+                console.log('自己安装的LOCAL_STORAGE的get');
+            }
+        });
+        console.log(NEC);
+        console.log(NetEaseCaches.TYPES);
+        NEC.set(NetEaseCaches.TYPES.LOCAL_STORAGE);
+        NEC.get(NetEaseCaches.TYPES.LOCAL_STORAGE);
+        // cookie:是前后台交互的体质
+        // cookie本地文件--cookie数据放到http请求头header中提交过去---服务器响应response之后---把cookie送入客户端--客户端又把cookie做一次更新
+        //session --就是一次回话，也就是跟服务器的一次连接---具有时效性
+        // 长连接：tcp/ip 利用websorket 服务器和客户端双向通信
+        // 短连接：session 客户端向服务器发送请求 单向
+
+    </script>
+</body>
+
+</html>
