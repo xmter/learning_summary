@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--  免费的 CDN 加速服务，访问速度更快、加速效果更明显、没有速度和带宽限制、永久免费 -->
+</head>
+
+<body>
+    <div id="app">
+        <!-- 画页面 -->
+        <!-- 画面板 -->
+        <!--.panel-primary 带语境色彩的面板-->
+        <div class="panel panel-primary">
+            <!--.panel-heading 带标题的面版 -->
+            <div class="panel-heading">
+                <!--  .panel-title 类的 <h1>-<h6> 标签，添加一个预定义样式的标题 不过，<h1>-<h6> 标签的字体大小将被 .panel-heading 的样式所覆盖 -->
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <!-- .form-inline 类可使其内容左对齐并且表现为 inline-block 级别的控件 -->
+            <div class="panel-body form-inline">
+                <!-- .form-control 类的 <input>、<textarea> 和 <select> 元素都将被默认设置宽度属性为 width: 100%; -->
+                <label>
+                    Id：
+                    <input type="text" class="form-control" v-model='id'>
+                </label>
+                <label>
+                    Name：
+                    <!--  @keyup.enter='add' 行  @keyup.113='add' 也行 在下面自定义也行@keyup.f2='add'-->
+                    <input type="text" class="form-control" v-model='name' @keyup.enter='add'>
+                    <!-- @keyup.enter='add' enter是vue给的键盘修饰符 -->
+                </label>
+                <!-- 在Vue中,使用事件绑定机制，为元素指定处理函数的时候，如果加了小括号，就可以给函数传参了 -->
+                <input type="button" value='添加' class="btn btn-primary form-control" @click='add()'>
+                <label>
+                    搜索名称关键字：
+                    <input type="text" class="form-control" v-model='keywords' v-focus v-color="'blue'">
+                    <!--'blue'是参数-->
+                </label>
+            </div>
+
+        </div>
+        <!-- 画表格 -->
+        <table class="table table-bordered table-hover table-striped text-center">
+            <!-- 
+                 .table-bordered 带边框的表格
+                 .table-hover 鼠标悬停
+                 .table-striped 条纹状表格
+             -->
+            <thead>
+                <tr>
+                    <th class="text-center">Id</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Ctime</th>
+                    <th class="text-center">Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- :key='item.id' key前的冒号，代表属性的绑定 即item.id是表达式而不是字符串-->
+                <tr v-for='item in sreach(keywords)' :key='item.id'>
+                    <!-- 
+                        用 {{}}是插值表达式
+                        或v-text=''都可以
+                     -->
+                    <td>{{item.id}}</td>
+                    <td v-text='item.name'></td>
+                    <td>{{item.ctime | dateFormat()}}</td>
+                    <td>
+                        <!-- .prevent 阻止事件的默认行为 -->
+                        <a href="#" @click.prevent='del(item.id)'>删除</a>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+
+    <div id="app2">
+        <p v-fontweight="'bolder'" v-fontsize="'30px'">{{dt|dateFormat}}</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+        //自定义全局按键修饰符-----vue只定义了个别键盘修饰符，如果要用其他键盘 必须通过键盘码获取
+        Vue.config.keyCodes.f2 = 113;
+
+        // 注册一个全局自定义指令，'v-focus'
+        // Vue.directive('focus',{           
+        //     // bind:function(el){// 每当指令绑定到元素上的时候，会立即执行这个bind函数 只执行一次
+        //     //     //bind 元素-->内存的过程 在内存中获取元素操作元素
+        //     //     // 理解---元素插入dom前---行为（方法）无法渲染到页面上
+        //     //     // el.focus();//不渲染
+        //     // },
+        //     inserted:function(el){ // 当绑定的元素插入到DOM中时,执行 ,触发一次
+        //     //     //inserted 内存-->页面的过程 在页面中获取操作元素
+        //         // 理解---元素插入dom后---行为（方法）渲染到页面上
+        //         // 获取焦点
+        //         el.focus();//el表示被绑定指令的哪个元素
+        //     },
+        //     // uppdated:function(el){
+        //     //     // 当vNode更新的时候 ，会执行 可能会触发多次
+
+        //     // }
+
+        // })
+
+        // 再自定义一个全局指令 v-color
+        Vue.directive('color', {
+            bind: function (el, binding) {
+                // 理解---元素插入dom前---行为（方法）无法渲染到页面上，但 样式（css）可以写在bind里 
+                // console.log(el);//绑定指令的元素
+                // console.log(binding);
+                // console.log(binding.name);  //指令名称
+                // console.log(binding.value);  //计算值
+                // console.log(binding.name);  //字符串
+                el.style.color = binding.value;
+            }
+        })
+
+        // 定义全局的过滤器，进行ctime时间的格式化
+        // 全局是什么 ---就是所有的vm对象都能共享                                                                                                                                                                                                                                                                                                                                      
+        Vue.filter('dateFormat', function (dateStr, pattern = '') {//pattern=''es6 如果不传 默认写法
+
+            // 根据给定的时间字符串，得到特定的时间
+            var dt = new Date(dateStr);
+            // yyy-mm-dd
+            var y = dt.getFullYear();
+            var m = dt.getMonth() + 1;
+            var d = dt.getDate();
+
+            if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+                return `${y}-${m}-${d}`;
+            } else {
+                var hh = dt.getHours();
+                var mm = dt.getMinutes();
+                var ss = dt.getSeconds();
+                return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+            }
+
+        })
+        // 创建Vue实例,得到ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [
+                    { id: 1, name: '奔驰', ctime: new Date() },
+                    { id: 2, name: '宝马', ctime: new Date() }
+                ],
+                id: '',
+                name: '',
+                keywords: ''
+            },
+            methods: {
+                add() {//添加的方法
+                    // console.log('ok');
+                    // 分析
+                    // 1.获取到id和name,直接从data上面获取
+                    // console.log(this.id)
+                    // console.log(this.name)
+                    // 2.组织出一个对象
+                    var obj = { id: this.id, name: this.name, ctime: new Date() }
+                    // 3.把这个对象，调用数组的方法，添加到data上的list上
+                    this.list.push(obj);
+
+                    this.id = this.name = '';
+                },
+                del(every_id) {//删除操作
+                    // 1.根据id找到索引
+                    //法一： some() 方法测试是否至少有一个元素可以通过被提供的函数方法。该方法返回一个Boolean类型的值。
+                    // this.list.some((item,i)=>{
+                    //     if(item.id==every_id){
+                    //         this.list.splice(i,1);
+                    //         return true;
+                    //     }     
+                    // })
+                    //法二： findIndex()方法返回数组中满足提供的测试函数的第一个元素的索引。否则返回-1。
+                    var index = this.list.findIndex((item) => {
+                        if (item.id == every_id) {
+                            return true;
+                        }
+                    })
+                    this.list.splice(index, 1);
+                    // 2.删除
+                    // this.list.splice(index,1);
+                },
+                sreach(keywords) {
+                    // var newList=[];
+                    // // 法一：
+                    // this.list.forEach((item)=>{
+                    //     // indexOf()：一个字符串是否包含另一个字符串 不包含返回-1
+                    //     // 'xxaxsx'.indexOf('') 返回值为0
+                    //     if(item.name.indexOf(keywords)!=-1){
+                    //         newList.push(item);
+                    //     }
+                    // })
+                    // return newList;
+
+                    // 方法二
+                    return this.list.filter((item) => {
+                        // indexOf()：一个字符串是否包含另一个字符串 返回值是true or false
+                        // 'xxaxsx'.includes('') 返回值为0
+                        if (item.name.includes(keywords)) {
+                            return true;
+                        }
+                    })
+
+                }
+            },
+            directives: {//局部自定义
+                'focus': {
+                    // 指令的定义
+                    inserted: function (el) {
+                        // 获取焦点
+                        el.focus();
+                    }
+                }
+            }
+        });
+
+        var vm2 = new Vue({
+            el: '#app2',
+            data: {
+                dt: new Date(),
+            },
+            methods: {
+
+            },
+            filters: {//定义私有过滤器 ---当全局的过滤器和私有过滤器重名时考虑就近原则
+                // 过滤器有两个条件 [过滤器名称 和 处理函数]
+                dateFormat(dateStr, pattern = '') {
+                    // 根据给定的时间字符串，得到特定的时间
+                    var dt = new Date(dateStr);
+                    // yyy-mm-dd
+                    var y = dt.getFullYear();
+                    var m = (dt.getMonth() + 1).toString().padStart(2, '0');
+                    // m=String.prototype.padStart.call(m,2,'0');
+
+                    var d = (dt.getDate()).toString().padStart(2, '0');
+
+                    if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+                        return `${y}-${m}-${d}`;
+                    } else {
+                        var hh = (dt.getHours()).toString().padStart(2, '0');
+                        var mm = (dt.getMinutes()).toString().padStart(2, '0');
+                        var ss = (dt.getSeconds()).toString().padStart(2, '0');
+                        return `${y}-${m}-${d} ${hh}:${mm}:${ss}----`
+                    }
+                }
+            },
+            directives: {//局部自定义
+                'fontweight': {
+                    // 指令的定义
+                    bind: function (el, binding) {
+                        // console.log(el);
+                        el.style.fontWeight = binding.value;
+                    }
+                },
+                'fontsize': function (el,binding) {//简写形式 代表bind inserted updated 几个钩子函数均可以
+                    el.style.fontSize =parseInt(binding.value)+'px';
+                }
+            }
+        });
+        //拓展 ：使用ES6中的字符串方法String.prototype.padStart(maxLenth,fillString=' ')
+        // 或String.prototype.padEnd(maxLenth,fillString=' ')
+    </script>
+</body>
+
+</html>
