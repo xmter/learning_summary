@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <p>{{msg|msgformat}}</p> -->
+        <!-- <p>{{msg|msgformat('他')}}</p> -->
+        <!-- 
+            msgformat 为第一个过滤器 test为第二个过滤器
+            操作:msgformat对msg处理 处理完返回 接着 test对处理后的msg再处理
+        -->
+        <p>{{msg|msgformat('他')|test}}</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+        // 全局过滤器
+        // Vue.filter('msgformat', function (msg) {
+        //     return msg.replace(/我/g, '你');
+        // })
+        // 优化--灵活
+         Vue.filter('msgformat', function (msg) {
+            return msg.replace(/我/g, '他');
+        })
+        // 过滤器可以多次的调用
+        Vue.filter('test', function (msg) {
+            return msg+' 必须的';
+        })
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'我很好 我是我 我可以'
+            }     
+        });
+
+
+    </script>
+</body>
+
+</html>

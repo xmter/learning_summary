@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--参考 https://www.runoob.com/vue2/vuejs-ajax.html -->
+</head>
+
+<body>
+    <div id="app">
+        <!-- <input type="button" value="get请求" @click='getInfo'>
+        <input type="button" value="post请求" @click='postInfo'> -->
+        <input type="button" value="jsonp请求" @click='jsonpInfo'>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <!-- Vue 要实现异步加载需要使用到 vue-resource 库。 -->
+    <!-- vue-resource基于vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+    <!-- Vue.js 2.0 版本推荐使用 axios 来完成 ajax 请求。 -->
+    <!-- 参考https://www.runoob.com/vue2/vuejs-ajax-axios.html -->
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+                // getInfo() {
+                //     this.$http.get('http://vue.studyit.io/api/getlunbo').then(function (res) {
+                //         console.log(res.body);
+                //     }, function () {
+                //         console.log('请求失败处理');
+                //     })
+                // },
+                // // post 发送数据到后端，需要第三个参数 {emulateJSON:true}。
+                // // emulateJSON 的作用： 如果Web服务器无法处理编码为 application/x-www-form-urlencoded 的请求，你可以启用 emulateJSON 选项。
+                // postInfo() {
+                //     this.$http.post('http://vue.studyit.io/api/post', { name: '小明' }, { emulateJSON: true }).then(function (res) {
+                //         console.log(res.body);
+                //     }, function () {
+                //         console.log('请求失败处理');
+                //     })
+                // },
+                jsonpInfo() {
+                    this.$http.post('http://vue.studyit.io/api/jsonp').then(function (res) {
+                        console.log(res.body);
+                    }, function () {
+                        console.log('请求失败处理');
+                    })
+                }
+            }
+        })
+        // 点击报错：No 'Access-Control-Allow-Origin' header is present on the requested resource. 
+        // 这个报错的原理是浏览器自身从安全角度考虑,不允许跨域访问.
+    </script>
+</body>
+
+</html>
