@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 数据响应式实现
+         1.首先根据数据响应式原理图解，实现一个整体架构(
+             包括MVVM类(也就是VUE类)和Watcher类
+         )，其中用到一个发布订阅模式。
+         2.然后实现MVVM中的由M到V，把模型里面的数据绑定到视图。
+         3.最后实现V到M，当文本框输入文本的时候，由文本事件触发更新模型中的数据，同时也更新相对应的视图(
+             同时也更新相对应的视图即用Object.definedProperty();中的set来代理。
+         )
+    -->
+    <div id="app">
+        <h1>数据响应式</h1>
+        <div>
+            <div v-text="myText"></div>
+            <div v-text="myBox"></div>
+            <input type="text" v-model="myText">
+            <input type="text" v-model="myBox">
+        </div>
+    </div>
+    <script>
+       
+
+        // 发布者---中介
+        class Vue {
+            constructor(options) {
+                this.options = options;
+                this.$data = options.data;//获取数据
+                // this.$el=options.el;//获取#app这个字符串
+                this.$el = document.querySelector(options.el);//获取#app对象
+
+                // 存订阅者
+                this._directive = {};//容器,存放订阅者
+                // 这样存放，局部渲染
+                // {myText:[订阅者1,订阅者2],myBox:[订阅者3,订阅者4]};
+
+
+                // 调用方法
+                this.Observer(this.$data);
+                this.Compile(this.$el);
+            }
+            // 劫持数据
+            Observer(data) {
+                // 初始化订阅者容器
+                for (let key in data) {
+                    this._directive[key] = [];
+                
+               
+            
+                //同时也更新相对应的视图
+                // 所以要进行数据劫持,需要修改data属性的get和set 作为一个代理
+                // 虽然vue对象里面没有 update方法,但我可以以new watcher实例对象 而实例对象有Update方法
+                let val=data[key];
+                let watch=this._directive[key];
+                //Object.defineProperty() 方法会直接在一个对象上定义一个新属性，
+                //或者修改一个对象的现有属性， 并返回这个对象。
+                // Object.defineProperty(obj, prop, descriptor)
+                Object.defineProperty(this.$data,key,{
+                    get:function(){
+                        return val;
+                    },
+                    set:function(newVal){
+                        if(newVal!==val){
+                            val=newVal;
+                            watch.forEach(element=>{
+                                // 更新
+                                element.update();//element就是Watcher实例对象
+                            })
+                        }
+                    }
+                })
+                }
+                 // console.log( this._directive);//{myText:[],myBox:[]};
+            }
+            // 解析指令
+            Compile(el) {
+                // 获取#app里的元素
+                let nodes = el.children;
+                for (let i = 0; i < nodes.length; i++) {
+                    let node = nodes[i];
+                    // 递归---处理嵌套元素的方法
+                    if (node.children.length) {
+                        this.Compile(node);
+                    }
+                    // 判断是否有指令
+                    if (node.hasAttribute("v-text")) {
+                        //订阅
+                        let attrVal = node.getAttribute("v-text");
+                        //this._directive[attrVal].push("订阅者");
+                        this._directive[attrVal].push(new Watcher(node, this, attrVal, "innerHTML"));
+                    }
+                    if (node.hasAttribute("v-model")) {
+                        //订阅
+                        let attrVal = node.getAttribute("v-model");
+                        //this._directive[attrVal].push("订阅者");
+                        this._directive[attrVal].push(new Watcher(node, this, attrVal, "value"));
+                        
+                        // oninput也行
+                        node.addEventListener("input",(e)=>{
+                            // 此函数是箭头函数，this依然指向的是vue
+                            // V-->M
+                            // e.target=====node
+                            this.$data[attrVal]=e.target.value;
+                            console.log(this.$data);//检验V变化 而M变化
+
+                            //同时也更新相对应的视图
+                            // this.update();这样不行 因为vue就没有Update方法 
+                        })
+                        // // onkeyup事件也行
+                        // node.addEventListener("keyup",(e)=>{
+                        //     // 此函数是箭头函数，this依然指向的是vue
+                        //     // V-->M
+                        //     this.$data[attrVal]=e.target.value;
+                        //     console.log(this.$data);//检验V变化 而M变化
+
+                        //     //同时也更新相对应的视图
+                        //     // this.update();这样不行 因为vue就没有Update方法 
+                        // })
+
+                    }
+                }
+            }
+        }
+        // 订阅者---买方
+        class Watcher {
+            constructor(el, vm, exp, attr) {
+                this.el = el;//元素对象(有指令的对象) 
+                this.vm = vm;//vue
+                this.exp = exp;//myText myBox
+                this.attr = attr;//innerHTML value
+
+                // 调用
+                this.update();
+            }
+            //更新视图
+            update() {
+                // M-->V
+                this.el[this.attr] = this.vm.$data[this.exp];
+            }
+        }
+
+        const app = new Vue({
+            el: "#app",
+            data: {
+                myText: "我是文本",
+                myBox: "我是盒子"
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        主要掌握算法：
+            1.回文
+            2.数据去重
+            3.统计字符串最多的字母
+            4.排序算法
+            5.不借助临时变量，进行两个整数的交换
+               如：异或 a=a^b;b=b^a;a=a^b;
+               如：加减 a=a+b;b=a-b;a=a-b;
+               如：解构 [a,b]=[b,a];
+               如：巧妙用数组 a=[b,b=a][0];
+        
+     -->
+    <script>
+        // 题目：对万名员工按年龄排序用什么算法？
+        //  万名-->数据量大
+        //  员工-->工号-->稳定性
+        //  年龄-->18-65 -->有可能重复
+        //  综合考虑 选用归并排序法
+
+
+        // 亮点：先拆分后归并 思路清晰且容易理解
+        // 后归并
+        function merge(left,right){
+            var result=[];//存比较后交换的值
+            while(left.length&&right.length){
+                if(left[0]<right[0]){
+                result.push(left.shift());
+                //亮点：头删shift
+                }else{
+                    result.push(right.shift());
+                }
+            }
+
+            return result.concat(left).concat(right);//结果
+            // 亮点：连续concat
+        };
+
+        // 先拆分
+        function mergeSort(arr){
+            // 递归终止条件
+            if(arr.length==1){
+                return arr;
+            }
+
+            var mid=Math.floor(arr.length/2);
+            var left_arr=arr.slice(0,mid);//亮点：slice分数组
+            var right_arr=arr.slice(mid);
+
+
+            // return merge(left_arr,right_arr);//结果
+            // 递归直到每个数组一个数字
+            // 亮点：递归
+            return merge(mergeSort(left_arr),mergeSort(right_arr));//结果
+
+        };
+
+        // var arr=[2,1];
+        // var arr=[1,2];
+        // var arr=[5,4,2];
+        // 亮点：数组从简单到难
+        var arr=[3,2,5,8,4,9,6,9,11,22,11,9,8,6,55,5,5,5,4];
+        console.log(mergeSort(arr));
+    </script>
+</body>
+</html>
