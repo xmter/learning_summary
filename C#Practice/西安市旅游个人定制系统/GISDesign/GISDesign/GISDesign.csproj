@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+     Workaround for VS2010 .NET 3.5 application referencing x86 assembly in resx file on 64-bit OS
+
+      http://social.msdn.microsoft.com/Forums/en-US/msbuild/thread/e5900710-9849-4d10-aa28-48b734d06bf2        
+-->
+  <PropertyGroup>
+    <ResGenToolArchitecture>Managed32Bit</ResGenToolArchitecture>
+    <ForceResGen32Bit Condition="'$(MSBuildToolsVersion)'=='4.0' And '$(PROCESSOR_ARCHITEW6432)'!='' And '$(TargetingClr2Framework)'=='true' And '$(PlatformTarget)'=='x86'">true</ForceResGen32Bit>
+  </PropertyGroup>
+  <Target Name="BeforeResGen" Condition="'$(ForceResGen32Bit)' == 'true'">
+    <PropertyGroup>
+      <ResGenSdkToolsPath>$(IntermediateOutputPath)ResGenForced32Bit/</ResGenSdkToolsPath>
+    </PropertyGroup>
+    <!-- Copy resgen.exe to intermediate working directory for UAC settings -->
+    <Copy SourceFiles="$(TargetFrameworkSDKToolsDirectory)ResGen.exe" DestinationFiles="$(ResGenSdkToolsPath)ResGen.exe" />
+    <!-- corflags.exe resgen.exe /32BIT+ /Force-->
+    <Exec WorkingDirectory="$(ResGenSdkToolsPath)" Command="&quot;$(TargetFrameworkSDKToolsDirectory)corflags.exe&quot; ResGen.exe /32BIT+ /Force" />
+    <!-- GenerateResource Task parameters
+        Using the non-64bit Tracker.exe and indicate resgen.exe has been forced to x86 -->
+    <PropertyGroup>
+      <ResGenTrackerSdkPath>$(SDK40ToolsPath)</ResGenTrackerSdkPath>
+      <ResGenToolArchitecture>Managed32Bit</ResGenToolArchitecture>
+      <CacheTargetFrameworkSDKToolsDirectory>$(TargetFrameworkSDKToolsDirectory)</CacheTargetFrameworkSDKToolsDirectory>
+      <TargetFrameworkSDKToolsDirectory>$(ResGenSdkToolsPath)</TargetFrameworkSDKToolsDirectory>
+    </PropertyGroup>
+  </Target>
+  <Target Name="AfterResGen" Condition="'$(ForceResGen32Bit)' == 'true'">
+    <PropertyGroup>
+      <TargetFrameworkSDKToolsDirectory>$(CacheTargetFrameworkSDKToolsDirectory)</TargetFrameworkSDKToolsDirectory>
+    </PropertyGroup>
+    <RemoveDir Directories="$(ResGenSdkToolsPath)" Condition="Exists('$(ResGenSdkToolsPath)')" />
+  </Target>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9CA30011-AD44-4C56-A2B9-EB4B4B054A16}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MapControlApplication1</RootNamespace>
+    <AssemblyName>MapControlApplication1</AssemblyName>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>http://localhost/MapControlApplication1/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.3DAnalyst, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.3DAnalystUI, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.ADF.Local">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.AnalysisTools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.ArcMapUI, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.DataManagementTools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.DataSourcesGDB, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.DisplayUI, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Framework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.GeoAnalyst, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geoprocessing, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geoprocessor, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.GlobeCore, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Location, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.NetworkAnalysis, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.NetworkAnalyst, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.NetworkAnalystTools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.NetworkAnalystUI, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Version">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.AxControls">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Carto">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Controls">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Display">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.SystemUI">
+      <Private>False</Private>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.DataSourcesFile, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.DataSourcesRaster, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geodatabase, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geometry, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Output, Version=10.0.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutFrm.Designer.cs">
+      <DependentUpon>AboutFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoadingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadingForm.designer.cs">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Spatial Analysis\BufferDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Spatial Analysis\BufferDlg.Designer.cs">
+      <DependentUpon>BufferDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtendCommand\AttributeTableFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExtendCommand\AttributeTableFrm.designer.cs">
+      <DependentUpon>AttributeTableFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtendCommand\OpenAttributeTable.cs" />
+    <Compile Include="GeoMapLoad.cs" />
+    <Compile Include="BasicMethod.cs" />
+    <Compile Include="CreateNewDocument.cs" />
+    <Compile Include="ExtendCommand\ArcGISToolbar1.cs" />
+    <Compile Include="ExtendCommand\RemoveLayer.cs" />
+    <Compile Include="ExtendCommand\RightMenu.cs" />
+    <Compile Include="ExtendCommand\ZoomtoLayer.cs" />
+    <Compile Include="IDW.cs" />
+    <Compile Include="Input\ClassRasterOp.cs" />
+    <Compile Include="Input\ClassRender.cs" />
+    <Compile Include="Input\ClassXMLoad.cs" />
+    <Compile Include="Input\DownPic.cs" />
+    <Compile Include="Input\GDBInput.cs" />
+    <Compile Include="InterSect.cs" />
+    <Compile Include="LayerVisibility.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MapSurrounds\CreateNorthArrow.cs" />
+    <Compile Include="MapSurrounds\CreateScaleBar.cs" />
+    <Compile Include="MapSurrounds\CreateScaleText.cs" />
+    <Compile Include="MapSurrounds\SymbolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Query\FrmAttriQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\FrmAttriQuery.designer.cs">
+      <DependentUpon>FrmAttriQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Query\frmLocationQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\frmLocationQuery.designer.cs">
+      <DependentUpon>frmLocationQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Query\frmPromptGetValues.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\frmPromptGetValues.designer.cs">
+      <DependentUpon>frmPromptGetValues.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Query\frmPromptQuerying.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\frmPromptQuerying.designer.cs">
+      <DependentUpon>frmPromptQuerying.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Query\frmQuickFind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\frmQuickFind.designer.cs">
+      <DependentUpon>frmQuickFind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtendCommand\SymbolSelectorFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExtendCommand\SymbolSelectorFrm.Designer.cs">
+      <DependentUpon>SymbolSelectorFrm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AboutFrm.resx">
+      <DependentUpon>AboutFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoadingForm.resx">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Spatial Analysis\BufferDlg.resx">
+      <DependentUpon>BufferDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtendCommand\AttributeTableFrm.resx">
+      <DependentUpon>AttributeTableFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MapSurrounds\SymbolForm.resx">
+      <DependentUpon>SymbolForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\FrmAttriQuery.resx">
+      <DependentUpon>FrmAttriQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\frmLocationQuery.resx">
+      <DependentUpon>frmLocationQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\frmPromptGetValues.resx">
+      <DependentUpon>frmPromptGetValues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\frmPromptQuerying.resx">
+      <DependentUpon>frmPromptQuerying.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\frmQuickFind.resx">
+      <DependentUpon>frmQuickFind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtendCommand\SymbolSelectorFrm.resx">
+      <DependentUpon>SymbolSelectorFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\DataSources\BasicMethod.datasource" />
+    <None Include="Properties\DataSources\BufferDlg.datasource" />
+    <None Include="Properties\DataSources\BufferForm.datasource" />
+    <None Include="Properties\DataSources\CcFrm.datasource" />
+    <None Include="Properties\DataSources\CreateNewDocument.datasource" />
+    <None Include="Properties\DataSources\frmLegendElement.datasource" />
+    <None Include="Properties\DataSources\frmMapManage.datasource" />
+    <None Include="Properties\DataSources\frmNorthElement.datasource" />
+    <None Include="Properties\DataSources\frmScaleElement.datasource" />
+    <None Include="Properties\DataSources\frmTextElement.datasource" />
+    <None Include="Properties\DataSources\GeoMapLoad.datasource" />
+    <None Include="Properties\DataSources\LoginForm.datasource" />
+    <None Include="Properties\DataSources\MainForm.datasource" />
+    <None Include="Properties\DataSources\MapControlApplication1.ExtendCommand.ArcGISToolbar1.datasource" />
+    <None Include="Properties\DataSources\MapControlApplication1.ExtendCommand.ShowAttributeTable.datasource" />
+    <None Include="Properties\DataSources\MapControlApplication1.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\MapControlApplication1.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\MapControlApplication1.SelectTools.frmQueryBySQL.datasource" />
+    <None Include="Properties\DataSources\MapControlApplication1.SelectTools.frmShowSelectResults.datasource" />
+    <None Include="Properties\DataSources\MapControlApplication1.SelectTools.frmSimpleQuery.datasource" />
+    <None Include="Properties\DataSources\MatrixFormingFrm.datasource" />
+    <None Include="Properties\DataSources\MbcTc.datasource" />
+    <None Include="Properties\DataSources\MergeAndIntersect.datasource" />
+    <None Include="Properties\DataSources\OpenAttributeTable.datasource" />
+    <None Include="Properties\DataSources\OverlayMergeCmd.datasource" />
+    <None Include="Properties\DataSources\Program.datasource" />
+    <None Include="Properties\DataSources\RemoveLayer.datasource" />
+    <None Include="Properties\DataSources\RightMenu.datasource" />
+    <None Include="Properties\DataSources\SelectToolsClass.datasource" />
+    <None Include="Properties\DataSources\WeighMaxtrix.datasource" />
+    <None Include="Properties\DataSources\ZoomtoLayer.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\exit.bmp" />
+    <None Include="Resources\find.bmp" />
+    <None Include="Resources\ZoomToSelection1.bmp" />
+    <None Include="Resources\select_using_graphics.bmp" />
+    <None Include="Resources\ArcView_table.bmp" />
+    <None Include="Resources\ZoomToSelection.bmp" />
+    <None Include="Resources\SwichSelection.bmp" />
+    <None Include="Resources\SelectAll.bmp" />
+    <None Include="Resources\ClearSelectedCommand.gif" />
+    <None Include="Resources\pointer_with_selection.bmp" />
+    <EmbeddedResource Include="ExtendCommand\RemoveLayer.bmp" />
+    <EmbeddedResource Include="ExtendCommand\ZoomtoLayer.bmp" />
+    <EmbeddedResource Include="MapSurrounds\NorthArrow.bmp" />
+    <EmbeddedResource Include="MapSurrounds\scalebar.bmp" />
+    <EmbeddedResource Include="MapSurrounds\ScaleText.bmp" />
+    <None Include="Resources\opentype%281%29.gif" />
+    <None Include="Resources\DeleteRecord.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ExtendCommand\OpenAttributeTable.bmp" />
+    <None Include="Resources\ZoomToSelection2.bmp" />
+    <None Include="Resources\ClearSelectedCommand1.gif" />
+    <None Include="Resources\SwichSelection1.bmp" />
+    <None Include="Resources\SelectAll1.bmp" />
+    <None Include="Resources\pointer_with_selection1.bmp" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

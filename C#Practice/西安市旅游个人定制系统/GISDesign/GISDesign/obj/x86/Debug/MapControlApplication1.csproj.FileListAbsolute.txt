@@ -1,0 +1,80 @@
+D:\Backup\我的文档\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\bin\Debug\MapControlApplication1.exe
+D:\Backup\我的文档\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\bin\Debug\MapControlApplication1.pdb
+D:\Backup\我的文档\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Backup\我的文档\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.MainForm.resources
+D:\Backup\我的文档\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.Properties.Resources.resources
+D:\Backup\我的文档\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.csproj.GenerateResource.Cache
+D:\Backup\我的文档\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.exe
+D:\Backup\我的文档\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.pdb
+D:\Backup\我的文档\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.LoginForm.resources
+D:\我的文档\foreverspl\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.exe
+D:\我的文档\foreverspl\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.pdb
+D:\我的文档\foreverspl\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\bin\Debug\MapControlApplication1.exe
+D:\我的文档\foreverspl\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\bin\Debug\MapControlApplication1.pdb
+D:\我的文档\foreverspl\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\我的文档\foreverspl\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.LoginForm.resources
+D:\我的文档\foreverspl\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.MainForm.resources
+D:\我的文档\foreverspl\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.Properties.Resources.resources
+D:\我的文档\foreverspl\Visual Studio 2008\Projects\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.csproj.GenerateResource.Cache
+d:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.exe
+d:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.pdb
+D:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\bin\Debug\MapControlApplication1.exe
+D:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\bin\Debug\MapControlApplication1.pdb
+D:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.LoginForm.resources
+D:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.MainForm.resources
+D:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.Properties.Resources.resources
+D:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
+D:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource-ResGen.read.4.tlog
+D:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog
+D:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.frmScaleElement.resources
+D:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.frmMapManage.resources
+D:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.frmNorthElement.resources
+d:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.MergeAndIntersect.resources
+d:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.SelectTools.frmQueryBySQL.resources
+d:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.BufferForm.resources
+d:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.BufferDlg.resources
+d:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource.read.1.tlog
+d:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource.write.1.tlog
+d:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.CcFrm.resources
+d:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.MatrixFormingFrm.resources
+d:\我的文档\foreverspl\Visual Studio 2008\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.MbcTc.resources
+D:\黄清雨\学习资料\科创\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.exe
+D:\黄清雨\学习资料\科创\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.pdb
+D:\黄清雨\学习资料\科创\MapControlApplication1\MapControlApplication1\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\黄清雨\学习资料\科创\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
+D:\黄清雨\学习资料\科创\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource-ResGen.read.4.tlog
+D:\黄清雨\学习资料\科创\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\黄清雨\学习资料\科创\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog
+D:\黄清雨\学习资料\科创\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.exe
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.pdb
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource-ResGen.read.4.tlog
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\ResGen.read.1.tlog
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\ResGen.write.1.tlog
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\bin\Debug\MapControlApplication1.exe.config
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.BufferDlg.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.CcFrm.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.MatrixFormingFrm.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.MbcTc.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.OpenAttributeTable.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.LoginForm.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.MainForm.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.frmMapManage.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.frmNorthElement.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.frmScaleElement.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.Properties.Resources.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.SelectTools.frmQueryBySQL.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.BufferForm.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.MergeAndIntersect.resources
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\bin\Debug\MapControlApplication1.exe
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\bin\Debug\MapControlApplication1.pdb
+C:\Users\lenovo\Desktop\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.MapSurrounds.SymbolForm.resources
+D:\黄清雨\学习资料\GIS设计与实现\实习\GIS设计\GISDesign\MapControlApplication1\MapControlApplication1\bin\Debug\MapControlApplication1.exe.config
+D:\黄清雨\学习资料\GIS设计与实现\实习\GIS设计\GISDesign\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.exe
+D:\黄清雨\学习资料\GIS设计与实现\实习\GIS设计\GISDesign\MapControlApplication1\MapControlApplication1\obj\x86\Debug\MapControlApplication1.pdb
